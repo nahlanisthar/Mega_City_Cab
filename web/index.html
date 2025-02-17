@@ -5,11 +5,53 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Mega City Cab</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" type="text/css" href="./CSS/Styles.css">
     </head>
     <body>
-        <div>TODO write content</div>
+        <header class="bg-600 py-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="headtag">Mega City Cab</h1>
+                <div>
+                    <a href="#" class="login">Login</a>
+                    <a href="#" class="login">Sign Up</a>
+                </div>
+            </div>
+        </header>
+        <nav class="bg-800 py-4">
+            <div class="container mx-auto flex justify-around text-white">
+                <a href="index.html" class="hover:text-yellow-400 nav-content">Home</a>
+                <a href="Pages/AboutUs.html" class="hover:text-yellow-400 nav-content">About Us</a>
+                <a href="Pages/HowItWorks.html" class="hover:text-yellow-400 nav-content">How it Works</a>
+                <a href="Pages/ContactUs.html" class="hover:text-yellow-400 nav-content">Contact Us</a>
+            </div>
+        </nav>
+        <div class="custom-container">
+            <div class="row align-items-center">
+                <!-- Left Column: Image -->
+                <div class="col-md-6">
+                    <img src="./Assets/Images/online-cab-booking-vector.jpg" alt="Home Image" class="img-fluid">
+                </div>
+                <!-- Right Column: Welcome Text -->
+                <div class="col-md-6">
+                    <h1 class="welcome-text">Your Reliable Ride, Anytime, Anywhere!</h1>
+                    <p class="motto">Welcome to Mega City Cab, your top choice for urban transportation. <br>
+                        Whether you need a quick ride, a late-night pick-up, or a day of exploration, <br> our
+                        professional drivers ensure you arrive safely and efficiently. With our <br> user-friendly
+                        app, real-time tracking, and competitive rates, getting <br> around the city is a breeze.
+                        Experience convenience at its best—ride with <br> Mega City Cab today!</p>
+                    <a href="./Pages/SignUp.html" class="btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-800 text-white py-6">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2025 Mega City Cab. All rights reserved.</p>
+            </div>
+        </footer>
     </body>
 </html>
