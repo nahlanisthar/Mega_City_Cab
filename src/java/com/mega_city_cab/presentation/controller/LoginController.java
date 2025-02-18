@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("name", customerName);
             session.setAttribute("loggedIn", true);
             
-            response.sendRedirect("dashboard.html");
+            response.sendRedirect(request.getContextPath() + "/Pages/Dashboard.jsp");
         } else {
             response.sendRedirect("login.html?error=Invalid username or password");
         }
