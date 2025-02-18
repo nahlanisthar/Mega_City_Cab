@@ -32,9 +32,13 @@ public class LoginController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         boolean isValidUser = userDAO.validateUser(username, password);
         if (isValidUser) {
+            String customerName = userDAO.getCustomerNameByUsername(username);
+            
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
+            session.setAttribute("name", customerName);
             session.setAttribute("loggedIn", true);
+            
             response.sendRedirect("dashboard.html");
         } else {
             response.sendRedirect("login.html?error=Invalid username or password");
