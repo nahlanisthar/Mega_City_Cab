@@ -133,6 +133,7 @@ footer{
     margin-top: 40px;
 }
 
+
 /*Contact us page*/
 .contact-form{
     padding-left: 30px;
@@ -141,6 +142,51 @@ footer{
 .friend{
     padding: 4.5px;
 }
+
+
+/*Sign Up page*/
+.login-container {
+    height: 100vh;
+}
+
+.loginpic{
+    padding-top: 120px;
+}
+
+.login-section{
+    background-color: #85a05d;
+}
+
+.submitbtn{
+    background-color: #607240;
+    padding: 10px 100px 10px 100px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+.signupfont{
+    font-family: fantasy;
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.signup-form-label{
+    padding-left: 85px;
+    color: white;
+    font-weight: bold;
+}
+
+.login-font{
+    font-family: serif;
+    text-align: center;
+    color: white;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
 
 
 
