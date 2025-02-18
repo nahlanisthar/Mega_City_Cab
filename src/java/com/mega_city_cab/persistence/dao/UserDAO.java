@@ -54,4 +54,23 @@ public class UserDAO {
         }
         return false;
     }
+    
+    public String getCustomerNameByUsername(String username) {
+    String name = null;
+    try (Connection con = DBconnection.getConnection()) {
+        String query = "SELECT c.name FROM customers c " +
+                       "JOIN users u ON c.customer_id = u.customer_id " +
+                       "WHERE u.username = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, username);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            name = rs.getString("name");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return name;
+}
+
 }

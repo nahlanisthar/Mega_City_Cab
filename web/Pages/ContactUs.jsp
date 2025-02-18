@@ -1,8 +1,11 @@
+<%-- 
+    Document   : ContactUs
+    Created on : Feb 18, 2025, 10:17:17 PM
+    Author     : Nahla 
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
 <html>
     <head>
         <title>Contact Us</title>
@@ -25,9 +28,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <nav class="bg-800 py-4">
             <div class="container mx-auto flex justify-around text-white">
                 <a href="../index.html" class="hover:text-yellow-400 nav-content">Home</a>
-                <a href="AboutUs.html" class="hover:text-yellow-400 nav-content">About Us</a>
-                <a href="HowItWorks.html" class="hover:text-yellow-400 nav-content">How it Works</a>
-                <a href="ContactUs.html" class="hover:text-yellow-400 nav-content">Contact Us</a>
+                <a href="AboutUs.jsp" class="hover:text-yellow-400 nav-content">About Us</a>
+                <a href="HowItWorks.jsp" class="hover:text-yellow-400 nav-content">How it Works</a>
+                <a href="ContactUs.jsp" class="hover:text-yellow-400 nav-content">Contact Us</a>
             </div>
         </nav>
         <div class="custom-container">
@@ -80,4 +83,3 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     </body>
 </html>
-
