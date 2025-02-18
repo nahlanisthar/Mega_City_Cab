@@ -51,12 +51,26 @@ public class RegisterationController extends HttpServlet {
             UserDAO userDAO = new UserDAO();
 
             if (userDAO.addUser(user)) {
-                response.sendRedirect("Contactus.html");
+                response.sendRedirect(request.getContextPath() + "/Pages/Login.html");
             } else {
-                response.sendRedirect("index.html");
+                // Display simple popup message and go back to registration
+                response.setContentType("text/html");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<script>");
+                    out.println("alert('Registration Failed. Please Try Again Later.');");
+                    out.println("window.location.href='register.html';");
+                    out.println("</script>");
+                }
             }
         } else {
-            response.sendRedirect("register.html?error=Customer registration failed");
+            // Display simple popup message and go back to registration
+                response.setContentType("text/html");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<script>");
+                    out.println("alert('There's something wrong at our end. Please bear with us and try again after a few minutes.');");
+                    out.println("window.location.href='register.html';");
+                    out.println("</script>");
+                }
         }
     }
 
