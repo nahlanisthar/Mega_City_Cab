@@ -99,6 +99,37 @@
                         }
                     });
 
+                    //username checking
+                    document.getElementById('username').addEventListener('input', () => {
+                        const username = document.getElementById('username').value;
+                        const warning = document.getElementById('usernameWarning');
+
+                        if (username.length > 0) {
+                            fetch(`/Mega_City_Cab/checkUsername?username=${encodeURIComponent(username)}`)
+                                    .then(response => response.text())
+                                    .then(status => {
+                                        if (status === 'taken') {
+                                            warning.textContent = "Username already taken. Please choose another.";
+                                            warning.classList.add('text-danger');
+                                        } else if (status === 'available') {
+                                            //proceed
+                                        } else {
+                                            warning.textContent = "Error checking username.";
+                                            warning.classList.add('text-danger');
+                                            warning.classList.remove('text-success');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        warning.textContent = "Exception checking username.";
+                                        warning.classList.add('text-danger');
+                                        warning.classList.remove('text-success');
+                                    });
+                        } else {
+                            warning.textContent = "";
+                        }
+                    });
+
                     // Password
                     const passwordInput = document.getElementById('password');
                     const passwordWarning = document.getElementById('passwordWarning');
