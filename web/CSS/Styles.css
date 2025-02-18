@@ -144,7 +144,7 @@ footer{
 }
 
 
-/*Sign Up page*/
+/*Login page*/
 .login-container {
     height: 100vh;
 }
@@ -157,6 +157,26 @@ footer{
     background-color: #85a05d;
 }
 
+.loginfont{
+    font-family: fantasy;
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.form-label{
+    color: white;
+    font-size: 18px;
+    padding-left: 85px;
+}
+
+.login-form-label{
+    padding-left: 85px;
+    color: white;
+    font-weight: bold;
+}
+
 .submitbtn{
     background-color: #607240;
     padding: 10px 100px 10px 100px;
@@ -164,6 +184,8 @@ footer{
     font-weight: bold;
 }
 
+
+/*Sign Up page*/
 .signupfont{
     font-family: fantasy;
     text-align: center;
