@@ -50,12 +50,14 @@
                         <div class="mb-2">
                             <label class="signup-form-label">Username:</label>
                             <input type="text" name="username" id="username" class="form-control w-75 h-25 mx-auto"  required>
+                            <div id="usernameWarning" class="text-danger"></div>
                         </div>
 
                         <!-- Password -->
                         <div class="mb-2">
                             <label class="signup-form-label">Password:</label>
                             <input type="password" name="password" id="password" class="form-control w-75 h-25 mx-auto"  required>
+                            <div id="passwordWarning" class="text-danger"></div>
                         </div>
 
                         <!-- Confirm Password -->
@@ -84,6 +86,31 @@
                         return true; // Allow form submission
                     }
 
+                    // Username
+                    const usernameInput = document.getElementById('username');
+                    const usernameWarning = document.getElementById('usernameWarning');
+
+                    usernameInput.addEventListener('input', () => {
+                        if (usernameInput.value.length > 20) {
+                            usernameInput.value = usernameInput.value.slice(0, 20);
+                            usernameWarning.textContent = "Maximum 20 characters allowed!";
+                        } else {
+                            usernameWarning.textContent = "";
+                        }
+                    });
+
+                    // Password
+                    const passwordInput = document.getElementById('password');
+                    const passwordWarning = document.getElementById('passwordWarning');
+
+                    passwordInput.addEventListener('input', () => {
+                        if (passwordInput.value.length > 20) {
+                            passwordInput.value = passwordInput.value.slice(0, 20);
+                            passwordWarning.textContent = "Maximum 20 characters allowed!";
+                        } else {
+                            passwordWarning.textContent = "";
+                        }
+                    });
                 </script>
 
                 <!--Left Side (Image) -->

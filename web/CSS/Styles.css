@@ -164,7 +164,6 @@ footer{
     font-weight: bold;
 }
 
-
 .signupfont{
     font-family: fantasy;
     text-align: center;
@@ -187,6 +186,11 @@ footer{
     margin-top: 10px;
 }
 
-
+.text-danger {
+    color: darkred !important;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 85px;
+}
 
 
