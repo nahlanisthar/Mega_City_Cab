@@ -5,7 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page session="true" %>
+
+<%
+    // Retrieve user's name from session
+    HttpSession sessionObj = request.getSession(false);
+if (session == null || session.getAttribute("username") == null) {
+    response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+}
+%>
 
 <!DOCTYPE html>
 <html>
@@ -22,14 +29,14 @@
             <div class="container mx-auto flex justify-between items-center">
                 <h1 class="headtag">Mega City Cab</h1>
                 <div>
-                    <a href="#" class="login">Log Out</a>
+                    <a href="Logout.jsp" class="login">Log Out</a>
                 </div>
             </div>
         </header>
         <nav class="bg-800 py-4">
             <div class="container mx-auto flex justify-around text-white">
                 <a href="Dashboard.jsp" class="hover:text-yellow-400 nav-content">Home</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Book A Ride</a>
+                <a href="BookARide.jsp" class="hover:text-yellow-400 nav-content">Book A Ride</a>
                 <a href="#" class="hover:text-yellow-400 nav-content">Activity</a>
                 <a href="#" class="hover:text-yellow-400 nav-content">My Profile</a>
             </div>
@@ -48,7 +55,7 @@
                         a special occasion, we’re here to make your journey smooth and hassle-free. Enjoy easy bookings,
                         real-time tracking, secure payments, and professional drivers, all designed to ensure a safe and
                         pleasant experience. Thank you for choosing Mega City Cab, where every ride matters!</p>
-                    <a href="./Pages/SignUp.html" class="btn">Book Now</a>
+                    <a href="../Pages/BookARide.jsp" class="btn">Book Now</a>
                 </div>
             </div>
         </div>

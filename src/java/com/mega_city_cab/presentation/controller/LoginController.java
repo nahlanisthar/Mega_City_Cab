@@ -38,6 +38,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("username", username);
             session.setAttribute("name", customerName);
             session.setAttribute("loggedIn", true);
+            session.setMaxInactiveInterval(60 * 60); // 1 hour session timeout
             
             response.sendRedirect(request.getContextPath() + "/Pages/Dashboard.jsp");
         } else {
