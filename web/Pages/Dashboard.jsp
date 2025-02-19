@@ -9,9 +9,9 @@
 <%
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
-if (session == null || session.getAttribute("username") == null) {
-    response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
-}
+    if (session == null || session.getAttribute("username") == null) {
+        response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+    }
 %>
 
 <!DOCTYPE html>
@@ -22,6 +22,7 @@ if (session == null || session.getAttribute("username") == null) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="../JS/Scripts.js"></script>
         <link rel="stylesheet" type="text/css" href="../CSS/Styles.css">
     </head>
     <body>
@@ -29,7 +30,7 @@ if (session == null || session.getAttribute("username") == null) {
             <div class="container mx-auto flex justify-between items-center">
                 <h1 class="headtag">Mega City Cab</h1>
                 <div>
-                    <a href="Logout.jsp" class="login">Log Out</a>
+                    <a href="Logout.jsp" class="login" onclick="return confirmLogout()">Log Out</a>
                 </div>
             </div>
         </header>
@@ -49,7 +50,7 @@ if (session == null || session.getAttribute("username") == null) {
                 </div>
                 <!-- Right Column: Welcome Text -->
                 <div class="col-md-6">
-                    <h1 class="welcome-text">Welcome, <%= session.getAttribute("name") %>!</h1>
+                    <h1 class="welcome-text">Welcome, <%= session.getAttribute("name")%>!</h1>
                     <p class="motto-1">Welcome back to Mega City Cab, your trusted partner for safe, comfortable, and 
                         reliable rides across Colombo. Whether you’re traveling to and fro, running errands, or heading out for
                         a special occasion, we’re here to make your journey smooth and hassle-free. Enjoy easy bookings,
