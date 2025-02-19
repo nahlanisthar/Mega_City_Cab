@@ -58,7 +58,7 @@ public class RegisterationController extends HttpServlet {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<script>");
                     out.println("alert('Registration Failed. Please Try Again Later.');");
-                    out.println("window.location.href='register.html';");
+                    out.println("window.location.href='Pages/SignUp.html';");
                     out.println("</script>");
                 }
             }
@@ -68,7 +68,7 @@ public class RegisterationController extends HttpServlet {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<script>");
                     out.println("alert('There's something wrong at our end. Please bear with us and try again after a few minutes.');");
-                    out.println("window.location.href='register.html';");
+                    out.println("window.location.href='Pages/SignUp.html");
                     out.println("</script>");
                 }
         }

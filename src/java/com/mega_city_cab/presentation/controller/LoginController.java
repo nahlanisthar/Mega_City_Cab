@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.annotation.WebServlet;
 import com.mega_city_cab.persistence.dao.UserDAO;
-import com.mega_city_cab.business.model.User;
 
 /**
  *
@@ -33,23 +32,28 @@ public class LoginController extends HttpServlet {
         boolean isValidUser = userDAO.validateUser(username, password);
         if (isValidUser) {
             String customerName = userDAO.getCustomerNameByUsername(username);
-            
+
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("name", customerName);
             session.setAttribute("loggedIn", true);
             session.setMaxInactiveInterval(60 * 60); // 1 hour session timeout
-            
+
             response.sendRedirect(request.getContextPath() + "/Pages/Dashboard.jsp");
         } else {
-            response.sendRedirect("login.html?error=Invalid username or password");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<script>");
+                    out.println("alert('Invalid Username or Password. Please try again');");
+                    out.println("window.location.href='Pages/Login.html';");
+                    out.println("</script>");
+                }
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("login.html"); // Show login page on GET request
+        response.sendRedirect("Login.html"); // Show login page on GET request
     }
 
     @Override
