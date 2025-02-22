@@ -32,10 +32,12 @@ public class LoginController extends HttpServlet {
         boolean isValidUser = userDAO.validateUser(username, password);
         if (isValidUser) {
             String customerName = userDAO.getCustomerNameByUsername(username);
+            String phone = userDAO.getContactByUsername(username);
 
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("name", customerName);
+            session.setAttribute("phone", phone);
             session.setAttribute("loggedIn", true);
             session.setMaxInactiveInterval(60 * 60); // 1 hour session timeout
 
@@ -43,7 +45,7 @@ public class LoginController extends HttpServlet {
         } else {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<script>");
-                    out.println("alert('Invalid Username or Password. Please try again');");
+                    out.println("alert('Invalid Username or Password. Please try again.');");
                     out.println("window.location.href='Pages/Login.html';");
                     out.println("</script>");
                 }

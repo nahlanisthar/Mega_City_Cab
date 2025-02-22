@@ -49,10 +49,6 @@ footer{
     margin-bottom: 20px;
 }
 
-.custom-container {
-    /*  margin-bottom: 10px*/
-}
-
 .motto{
     font-size: 20px;
     margin-bottom: 20px;
@@ -165,12 +161,6 @@ footer{
     margin-bottom: 20px;
 }
 
-.form-label{
-    color: white;
-    font-size: 18px;
-    padding-left: 85px;
-}
-
 .login-form-label{
     padding-left: 85px;
     color: white;
@@ -182,6 +172,10 @@ footer{
     padding: 10px 100px 10px 100px;
     margin-top: 20px;
     font-weight: bold;
+}
+
+.error-message{
+    color: red;
 }
 
 
@@ -221,5 +215,217 @@ footer{
     font-size: 20px;
     margin-bottom: 20px;
 }
+
+
+/*Book a Ride Page*/
+.set-height{
+    min-height: 380px;
+    max-height: auto;
+}
+
+.step-text{
+    font-size: 45px;
+    font-weight: bolder;
+    padding-right: 50px;
+    color: #607240;      /* Example text color */
+    margin-bottom: 20px;
+}
+
+.motto-2{
+    padding-right: 100px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 40px;
+}
+
+.head-form-label{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #85a05d;
+}
+
+.book-form-label{
+    font-size: 17px;
+    color: black;
+    font-weight: 500;
+}
+
+
+.next-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}
+
+.back-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 5px 35px 5px 35px;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+/*vehicle type*/
+/*picture boxes*/
+.piccontainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    /*    max-width: 1200px;*/
+}
+.card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+.image-section {
+    text-align: center;
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.content {
+    padding: 15px;
+    text-align: center;
+}
+
+.selection-label{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.van-img{
+    padding-top: 30px;
+    padding-bottom: 25px;
+}
+
+.bike-img{
+    margin-top: 20px;
+}
+
+.vehicle-type{
+    font-size: 18px;
+    font-weight: 500;
+    color: #607240;
+}
+
+.person{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.price{
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.user{
+    font-size: 5px;
+    background-color: red;
+}
+
+/*payment*/
+.pay-form-label{
+    font-size: 20px;
+    font-weight: 500;
+    color: #85a05d;
+}
+
+.paytype-form-label{
+    font-size: 18px;
+    color: black;
+    font-weight: 500;
+    margin: 20px 0px 10px 0px;
+}
+
+/*confirm and submit*/
+.value {
+    color: black; /* Blue color for values */
+    font-weight: 400;
+    font-size: 18px;
+}
+
+
+/* Progress Bar Styling */
+.progressbar {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    counter-reset: step;
+    width: 100%;
+    margin: auto;
+}
+
+.progressbar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.progress {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background-color: #85a05d;
+    transform: translateY(-50%);
+    transition: width 0.4s ease;
+    z-index: -1;
+}
+
+.progress-step {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background-color 0.4s ease;
+    position: relative;
+    z-index: 1; /* Ensures circles are above the progress bar */
+}
+
+.progress-step::before {
+    counter-increment: step;
+    content: counter(step);
+    color: white;
+}
+
+.progress-step-active {
+    background-color: #85a05d;
+}
+
 
 

@@ -9,8 +9,9 @@
 <%
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
-    if (session == null || session.getAttribute("username") == null) {
-        response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+    if (sessionObj == null || sessionObj.getAttribute("username") == null) {
+        response.sendRedirect("Login.html");
+        return;
     }
 %>
 
@@ -52,7 +53,7 @@
                 <div class="col-md-6">
                     <h1 class="welcome-text">Welcome, <%= session.getAttribute("name")%>!</h1>
                     <p class="motto-1">Welcome back to Mega City Cab, your trusted partner for safe, comfortable, and 
-                        reliable rides across Colombo. Whether you’re traveling to and fro, running errands, or heading out for
+                        reliable rides across Colombo. Whether you’re travelling to and fro, running errands, or heading out for
                         a special occasion, we’re here to make your journey smooth and hassle-free. Enjoy easy bookings,
                         real-time tracking, secure payments, and professional drivers, all designed to ensure a safe and
                         pleasant experience. Thank you for choosing Mega City Cab, where every ride matters!</p>

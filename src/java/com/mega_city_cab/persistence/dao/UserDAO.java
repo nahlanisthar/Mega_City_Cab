@@ -72,4 +72,22 @@ public class UserDAO {
         }
         return name;
     }
+    
+        public String getContactByUsername(String username) {
+        String phone = null;
+        try (Connection con = DBconnection.getConnection()) {
+            String query = "SELECT c.phone FROM customers c "
+                    + "JOIN users u ON c.customer_id = u.customer_id "
+                    + "WHERE u.username = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                phone = rs.getString("phone");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return phone;
+    }
 }
