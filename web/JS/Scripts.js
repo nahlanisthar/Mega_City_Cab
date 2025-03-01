@@ -5,6 +5,56 @@
 
 //book a ride
 //progress
+// Fetch Fare Prices When City Selection Changes
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("city1").addEventListener("change", fetchFare);
+    document.getElementById("city2").addEventListener("change", fetchFare);
+});
+
+function fetchFare() {
+    let pickup = document.getElementById("city1").value;
+    let dropoff = document.getElementById("city2").value;
+
+    console.log("Fetching fare for:", pickup, dropoff);
+
+    if (pickup && dropoff) {
+        let url = "/Mega_City_Cab/FareServlet?pickup=" + encodeURIComponent(pickup) + "&dropoff=" + encodeURIComponent(dropoff);
+        console.log("Request URL:", url);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                console.log("Response received, status:", xhr.status);
+                if (xhr.status === 200) {
+                    console.log("Response Text:", xhr.responseText);
+                    let fares = xhr.responseText.split(",");
+
+                    // Check if elements exist before setting innerText
+                    let bikePrice = document.getElementById("bike_fare");
+                    let tukPrice = document.getElementById("tuk_fare");
+                    let carPrice = document.getElementById("car_fare");
+                    let minivanPrice = document.getElementById("minivan_fare");
+                    let vanPrice = document.getElementById("van_fare");
+
+                    if (bikePrice) bikePrice.innerText = "Price: $" + fares[0];
+                    if (tukPrice) tukPrice.innerText = "Price: $" + fares[1];
+                    if (carPrice) carPrice.innerText = "Price: $" + fares[2];
+                    if (minivanPrice) minivanPrice.innerText = "Price: $" + fares[3];
+                    if (vanPrice) vanPrice.innerText = "Price: $" + fares[4];
+
+                    if (!bikePrice || !tukPrice || !carPrice || !minivanPrice || !vanPrice) {
+                        console.error("One or more price elements are missing from the HTML.");
+                    }
+                } else {
+                    console.error("Error fetching fare:", xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     let currentStep = 0;
     const steps = document.querySelectorAll(".step");
@@ -28,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const progressPercent = (stepIndex / totalSteps) * 100;
         progressBar.style.width = `${progressPercent}%`;
     }
-
+    
     window.nextStep = function () {
         if (currentStep === 0) {
             const pickup = document.getElementById("pickup").value;
