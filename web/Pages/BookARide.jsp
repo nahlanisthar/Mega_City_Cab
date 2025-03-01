@@ -9,16 +9,15 @@
 <%
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
-    if (sessionObj == null || sessionObj.getAttribute("username") == null) {
-        response.sendRedirect("Login.html");
-        return;
+    if (session == null || session.getAttribute("username") == null) {
+        response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
     }
 %>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mega City Cab</title>
+        <title>Book A Ride</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -36,21 +35,15 @@
             </div>
         </header>
         <nav class="bg-800 py-4">
-            <div class="container mx-auto flex justify-around text-white">
-                <a href="Dashboard.jsp" class="hover:text-yellow-400 nav-content">Home</a>
-                <a href="BookARide.jsp" class="hover:text-yellow-400 nav-content">Book A Ride</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Activity</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">My Profile</a>
-            </div>
         </nav>
+        <button id="homeButton" class="btn btn-danger exit-btn">Exit</button>
         <div class="container mt-5">
             <div class="progressbar">
                 <div class="progress" id="progress"></div>
-                <div class="progress-step progress-step-active" data-title="Vehicle"></div>
-                <div class="progress-step" data-title="Customer"></div>
-                <div class="progress-step" data-title="Destination"></div>
-                <div class="progress-step" data-title="Payment"></div>
-
+                <div class="progress-step progress-step-active" data-title="Vehicle">1</div>
+                <div class="progress-step" data-title="Customer">2</div>
+                <div class="progress-step" data-title="Destination">3</div>
+                <div class="progress-step" data-title="Payment">4</div>
             </div>
         </div>
 
@@ -59,8 +52,7 @@
                 <p class="motto-2">Please follow these steps to seamlessly book your ride with Mega City Cab.</p>
             </div>
             <div class="card-body">
-                <form id="bookingForm" method="POST" action="BookCabServlet">
-
+                <form id="bookingForm" method="POST" action="/Mega_City_Cab/BookingController">
                     <!-- Step 1: Input Destination -->
                     <div class="step active" id="step1">
                         <div class="row align-items-center">
@@ -82,12 +74,12 @@
                                         <select class="form-select" id="city1" name="city" required>
                                             <option value=""></option>
                                             <option value="Fort">Fort</option>
-                                            <option value="SlaveIsland">Slave Island</option>
+                                            <option value="Slave Island">Slave Island</option>
                                             <option value="Kollupitiya">Kollupitiya</option>
                                             <option value="Bambalapitiya">Bambalapitiya</option>
-                                            <option value="HavelockTown">Havelock Town</option>
+                                            <option value="Havelock Town">Havelock Town</option>
                                             <option value="Wellawatta">Wellawatta</option>
-                                            <option value="CinnamonGardens">Cinnamon Gardens</option>
+                                            <option value="Cinnamon Gardens">Cinnamon Gardens</option>
                                             <option value="Borella">Borella</option>
                                             <option value="Dematagoda">Dematagoda</option>
                                             <option value="Dehiwala">Dehiwala</option>
@@ -110,12 +102,12 @@
                                         <select class="form-select" id="city2" name="city" required>
                                             <option value=""></option>
                                             <option value="Fort">Fort</option>
-                                            <option value="SlaveIsland">Slave Island</option>
+                                            <option value="Slave Island">Slave Island</option>
                                             <option value="Kollupitiya">Kollupitiya</option>
                                             <option value="Bambalapitiya">Bambalapitiya</option>
-                                            <option value="HavelockTown">Havelock Town</option>
+                                            <option value="Havelock Town">Havelock Town</option>
                                             <option value="Wellawatta">Wellawatta</option>
-                                            <option value="CinnamonGardens">Cinnamon Gardens</option>
+                                            <option value="Cinnamon Gardens">Cinnamon Gardens</option>
                                             <option value="Borella">Borella</option>
                                             <option value="Dematagoda">Dematagoda</option>
                                             <option value="Dehiwala">Dehiwala</option>
@@ -143,7 +135,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Bike</h3>
                                     <p class="person">1 Person</p>
-                                    <p class="price">Price: </p>
+                                    <p id="bike_fare" class="price">Price: $0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Tuk')">
@@ -153,7 +145,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Tuk</h3>
                                     <p class="person">3 People</p>
-                                    <p class="price">Price: </p>
+                                    <p id="tuk_fare" class="price">Price: $0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Car')">
@@ -163,7 +155,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Car</h3>
                                     <p class="person">4 People</p>
-                                    <p class="price">Price: </p>
+                                    <p id="car_fare" class="price">Price: $0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Mini Van')">
@@ -173,7 +165,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Mini Van</h3>
                                     <p class="person">6 People</p>
-                                    <p class="price">Price: </p>
+                                    <p id="minivan_fare" class="price">Price: $0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Van')">
@@ -183,7 +175,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Van</h3>
                                     <p class="person">10 People</p>
-                                    <p class="price">Price: </p>
+                                    <p id="van_fare" class="price">Price: $0.00</p>
                                 </div>
                             </div>
                         </div>
@@ -274,15 +266,23 @@
 
                     <!-- Step 4: Confirm and Submit -->
                     <div class="step" id="step4">
-                        <h1 class="chooseus">Step 4: Confirm and Submit</h1>
-                        <p><span class="head-form-label">Vehicle:</span> <span class="value" id="confirmVehicle"></span></p>
-                        <p><span class="head-form-label">Name:</span> <span class="value"><%= session.getAttribute("name")%></span></p>
-                        <p><span class="head-form-label">Telephone:</span> <span class="value"><%= session.getAttribute("phone")%></span></p>
-                        <p><span class="head-form-label">Pickup Location:</span> <span class="value" id="confirmPickup"></span></p>
-                        <p><span class="head-form-label">Drop-off Location:</span> <span class="value" id="confirmDropoff"></span></p>
-                        <p><span class="head-form-label">Payment Plan:</span> <span class="value" id="confirmPayment"></span></p>
-                        <button type="button" class="btn back-btn" onclick="prevStep()">Back</button>
-                        <button type="submit" class="btn btn-success">Confirm Booking</button>
+                        <div class="row align-items-center">
+                            <!-- Right Column: Welcome Text -->
+                            <div class="col-md-6">
+                                <h1 class="chooseus">Step 4: Confirm and Submit</h1>
+                                <p><span class="head-form-label">Vehicle:</span> <span class="value" id="confirmVehicle"></span></p>
+                                <p><span class="head-form-label">Name:</span> <span class="value"><%= session.getAttribute("name")%></span></p>
+                                <p><span class="head-form-label">Phone Number:</span> <span class="value"><%= session.getAttribute("phone")%></span></p>
+                                <p><span class="head-form-label">Pickup Location:</span> <span class="value" id="confirmPickup"></span></p>
+                                <p><span class="head-form-label">Drop-off Location:</span> <span class="value" id="confirmDropoff"></span></p>
+                                <p><span class="head-form-label">Payment Plan:</span> <span class="value" id="confirmPayment"></span></p>
+                                <button type="button" class="btn back-btn" onclick="prevStep()">Back</button>
+                                <button type="submit" id="confirmbutton" class="btn confirm-btn">Confirm Booking</button>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="../Assets/Images/confirm.jpg" alt="login Image" class="mx-auto w-50 h-auto">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -294,6 +294,15 @@
             </div>
         </footer>
 
+        <script>
+            document.getElementById("homeButton").addEventListener("click", function (event) {
+                let confirmExit = confirm("Are you sure you want to exit?");
+                if (confirmExit) {
+                    window.location.href = "Dashboard.jsp";
+                }
+                // If the user clicks "Cancel", do nothing (stay on the same page)
+            });
+        </script>
 
     </body>
 </html>

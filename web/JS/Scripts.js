@@ -5,60 +5,6 @@
 
 //book a ride
 //progress
-//document.addEventListener("DOMContentLoaded", function () {
-//    let currentStep = 0;
-//    const steps = document.querySelectorAll(".step");
-//    const progressSteps = document.querySelectorAll(".progress-step");
-//    const progressBar = document.getElementById("progress");
-//
-//    function showStep(stepIndex) {
-//        steps.forEach((step, index) => {
-//            step.classList.toggle("active", index === stepIndex);
-//        });
-//
-//        progressSteps.forEach((progress, index) => {
-//            progress.classList.toggle("progress-step-active", index <= stepIndex);
-//        });
-//
-//        updateProgressBar(stepIndex);
-//    }
-//
-//    function updateProgressBar(stepIndex) {
-//        const totalSteps = progressSteps.length - 1; // Get the total steps
-//        const progressPercent = (stepIndex / totalSteps) * 100;
-//        progressBar.style.width = `${progressPercent}%`;
-//    }
-//
-//
-//    window.nextStep = function () {
-//        if (currentStep < steps.length - 1) {
-//            currentStep++;
-//            showStep(currentStep);
-//            updateConfirmation(); // Update confirmation values
-//        }
-//    };
-//
-//    window.prevStep = function () {
-//        if (currentStep > 0) {
-//            currentStep--;
-//            showStep(currentStep);
-//        }
-//    };
-//
-//    showStep(currentStep);
-//
-//    function updateConfirmation() {
-//        document.getElementById("confirmVehicle").textContent = document.getElementById("vehicle").value;
-//        document.getElementById("confirmName").textContent = document.getElementById("name").value;
-//        document.getElementById("confirmAddress").textContent = document.getElementById("address").value;
-//        document.getElementById("confirmTelephone").textContent = document.getElementById("telephone").value;
-//        document.getElementById("confirmPickup").textContent = document.getElementById("pickup").value;
-//        document.getElementById("confirmDropoff").textContent = document.getElementById("dropoff").value;
-//        document.getElementById("confirmPayment").textContent = document.getElementById("payment").value;
-//    }
-//
-//});
-
 document.addEventListener("DOMContentLoaded", function () {
     let currentStep = 0;
     const steps = document.querySelectorAll(".step");
@@ -78,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateProgressBar(stepIndex) {
-        const totalSteps = progressSteps.length - 1; 
+        const totalSteps = progressSteps.length - 1;
         const progressPercent = (stepIndex / totalSteps) * 100;
         progressBar.style.width = `${progressPercent}%`;
     }
@@ -150,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (currentStep < steps.length - 1) {
             currentStep++;
             showStep(currentStep);
-            updateConfirmation(); 
+            updateConfirmation();
         }
     };
 

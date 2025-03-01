@@ -9,10 +9,9 @@
 <%
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
-    if (sessionObj == null || sessionObj.getAttribute("username") == null) {
-        response.sendRedirect("Login.html");
-        return;
-    }
+if (session == null || session.getAttribute("username") == null) {
+    response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+}
 %>
 
 <!DOCTYPE html>
@@ -39,8 +38,8 @@
             <div class="container mx-auto flex justify-around text-white">
                 <a href="Dashboard.jsp" class="hover:text-yellow-400 nav-content">Home</a>
                 <a href="BookARide.jsp" class="hover:text-yellow-400 nav-content">Book A Ride</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Activity</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">My Profile</a>
+                <a href="Ride.jsp" class="hover:text-yellow-400 nav-content">Activity</a>
+                <a href="MyProfile.jsp" class="hover:text-yellow-400 nav-content">My Profile</a>
             </div>
         </nav>
         <div class="custom-container">

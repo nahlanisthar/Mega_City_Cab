@@ -37,6 +37,19 @@ nav{
     padding-left: 50px;
 }
 
+.admin{
+    font-size: 25px;
+    color: white;
+    padding-left: 50px;
+    padding-top: 15px;
+}
+
+.adminloginpic{
+    margin-top: 80px;
+    margin-right: 5px;
+}
+
+
 footer{
     background-color: #607240;
 }
@@ -220,7 +233,14 @@ footer{
 /*Book a Ride Page*/
 .set-height{
     min-height: 380px;
-    max-height: auto;
+}
+
+.exit-btn{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 115px;
+    float: right;
+    padding: 5px 35px 5px 35px;
 }
 
 .step-text{
@@ -367,6 +387,17 @@ footer{
     font-size: 18px;
 }
 
+.confirm-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}
+
+.confirm-btn::hover{
+    background-color: green;
+}
+
 
 /* Progress Bar Styling */
 .progressbar {
@@ -412,6 +443,7 @@ footer{
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    color: white;
     transition: background-color 0.4s ease;
     position: relative;
     z-index: 1; /* Ensures circles are above the progress bar */
@@ -419,7 +451,6 @@ footer{
 
 .progress-step::before {
     counter-increment: step;
-    content: counter(step);
     color: white;
 }
 
@@ -428,4 +459,96 @@ footer{
 }
 
 
+/*ride page*/
+.head-form-label-driver{
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #85a05d;
+}
 
+.driver-details-label{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.driver-values{
+    margin-bottom: 15px
+}
+
+.arrival-text{
+    font-size: 25px;
+}
+
+.find-text{
+    font-size: 20px;
+}
+
+.image {
+    position: absolute;
+    animation: drive 4.5s linear infinite;
+}
+
+.image-2 {
+    position: absolute;
+    animation: drive 4s linear infinite;
+}
+
+.image-3 {
+    position: absolute;
+    animation: drive 3.5s linear infinite;
+}
+
+.image-4 {
+    position: absolute;
+    animation: drive 3s linear infinite;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+}
+
+.cancel{
+    padding: 5px 35px 5px 35px;
+    background-color: crimson;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.dots span {
+    display: inline-block;
+    animation: blink 1.5s infinite;
+}
+.dots span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.dots span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.status-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.map-container {
+    width: 550px;
+    height: 300px;
+    background: url('../Assets/Images/map.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    float: right;
+}
+
+.map-pin {
+    position: absolute;
+    left: 50%;
+    bottom: 15%;
+    transform: translateX(-50%);
+    animation: bounce 1s infinite, pulse 1.5s infinite;
+}
