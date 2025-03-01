@@ -37,11 +37,16 @@ function fetchFare() {
                     let minivanPrice = document.getElementById("minivan_fare");
                     let vanPrice = document.getElementById("van_fare");
 
-                    if (bikePrice) bikePrice.innerText = "Price: $" + fares[0];
-                    if (tukPrice) tukPrice.innerText = "Price: $" + fares[1];
-                    if (carPrice) carPrice.innerText = "Price: $" + fares[2];
-                    if (minivanPrice) minivanPrice.innerText = "Price: $" + fares[3];
-                    if (vanPrice) vanPrice.innerText = "Price: $" + fares[4];
+                    if (bikePrice)
+                        bikePrice.innerText = "Price: $" + fares[0];
+                    if (tukPrice)
+                        tukPrice.innerText = "Price: $" + fares[1];
+                    if (carPrice)
+                        carPrice.innerText = "Price: $" + fares[2];
+                    if (minivanPrice)
+                        minivanPrice.innerText = "Price: $" + fares[3];
+                    if (vanPrice)
+                        vanPrice.innerText = "Price: $" + fares[4];
 
                     if (!bikePrice || !tukPrice || !carPrice || !minivanPrice || !vanPrice) {
                         console.error("One or more price elements are missing from the HTML.");
@@ -78,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const progressPercent = (stepIndex / totalSteps) * 100;
         progressBar.style.width = `${progressPercent}%`;
     }
-    
+
     window.nextStep = function () {
         if (currentStep === 0) {
             const pickup = document.getElementById("pickup").value;
@@ -160,10 +165,23 @@ document.addEventListener("DOMContentLoaded", function () {
     showStep(currentStep);
 
     function updateConfirmation() {
+        // Pickup location details
+        let pickupHouseNo = document.querySelector('input[name="houseNo"]').value;
+        let pickupStreet = document.getElementById("pickup").value;
+        let pickupCity = document.getElementById("city1").value;
+        let fullPickup = pickupHouseNo + ", " + pickupStreet + ", " + pickupCity;
+
+        // Drop-off location details
+        let dropoffHouseNo = document.querySelectorAll('input[name="houseNo"]')[1].value;
+        let dropoffStreet = document.getElementById("dropoff").value;
+        let dropoffCity = document.getElementById("city2").value;
+        let fullDropoff = dropoffHouseNo + ", " + dropoffStreet + ", " + dropoffCity;
+
         document.getElementById("confirmVehicle").textContent = document.getElementById("selectedVehicleInput").value;
-        document.getElementById("confirmPickup").textContent = document.getElementById("pickup").value;
-        document.getElementById("confirmDropoff").textContent = document.getElementById("dropoff").value;
+        document.getElementById("confirmPickup").textContent = fullPickup;
+        document.getElementById("confirmDropoff").textContent = fullDropoff;
         document.getElementById("confirmPayment").textContent = document.getElementById("payment").value;
+        document.getElementById("confirmFare").textContent = document.getElementById("selectedVehiclePrice").value;
     }
 });
 

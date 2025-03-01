@@ -181,6 +181,7 @@
                         </div>
                         <div class="selection-label" id="selectedVehicle">You selected:</div>
                         <input type="hidden" name="selectedVehicle" id="selectedVehicleInput">
+                        <input type="hidden" name="selectedVehiclePrice" id="selectedVehiclePrice">
                         <button type="button" class="btn back-btn" onclick="prevStep()">Back</button>
                         <button type="button" class="btn next-btn" onclick="nextStep()">Next</button>
                     </div>
@@ -189,6 +190,12 @@
                         function selectVehicle(vehicle) {
                             document.getElementById('selectedVehicle').innerText = 'You selected: ' + vehicle;
                             document.getElementById('selectedVehicleInput').value = vehicle;
+
+                            // Fetch price based on the selected vehicle
+                            let priceElementId = vehicle.toLowerCase().replace(" ", "") + "_fare"; // Converts "Mini Van" → "minivan_fare"
+                            let selectedPrice = document.getElementById(priceElementId).innerText.replace("Price: $", ""); // Extract price value
+
+                            document.getElementById('selectedVehiclePrice').value = selectedPrice; // Store in hidden input
                         }
                     </script>
 
@@ -270,12 +277,13 @@
                             <!-- Right Column: Welcome Text -->
                             <div class="col-md-6">
                                 <h1 class="chooseus">Step 4: Confirm and Submit</h1>
-                                <p><span class="head-form-label">Vehicle:</span> <span class="value" id="confirmVehicle"></span></p>
                                 <p><span class="head-form-label">Name:</span> <span class="value"><%= session.getAttribute("name")%></span></p>
                                 <p><span class="head-form-label">Phone Number:</span> <span class="value"><%= session.getAttribute("phone")%></span></p>
+                                <p><span class="head-form-label">Vehicle:</span> <span class="value" id="confirmVehicle"></span></p>
                                 <p><span class="head-form-label">Pickup Location:</span> <span class="value" id="confirmPickup"></span></p>
                                 <p><span class="head-form-label">Drop-off Location:</span> <span class="value" id="confirmDropoff"></span></p>
                                 <p><span class="head-form-label">Payment Plan:</span> <span class="value" id="confirmPayment"></span></p>
+                                <p><span class="head-form-label">Estimated Fare:</span> <span class="value" id="confirmFare"></span></p>
                                 <button type="button" class="btn back-btn" onclick="prevStep()">Back</button>
                                 <button type="submit" id="confirmbutton" class="btn confirm-btn">Confirm Booking</button>
                             </div>
