@@ -38,15 +38,15 @@ function fetchFare() {
                     let vanPrice = document.getElementById("van_fare");
 
                     if (bikePrice)
-                        bikePrice.innerText = "Price: $" + fares[0];
+                        bikePrice.innerText = "Price: LKR " + fares[0];
                     if (tukPrice)
-                        tukPrice.innerText = "Price: $" + fares[1];
+                        tukPrice.innerText = "Price: LKR " + fares[1];
                     if (carPrice)
-                        carPrice.innerText = "Price: $" + fares[2];
+                        carPrice.innerText = "Price: LKR " + fares[2];
                     if (minivanPrice)
-                        minivanPrice.innerText = "Price: $" + fares[3];
+                        minivanPrice.innerText = "Price: LKR " + fares[3];
                     if (vanPrice)
-                        vanPrice.innerText = "Price: $" + fares[4];
+                        vanPrice.innerText = "Price: LKR " + fares[4];
 
                     if (!bikePrice || !tukPrice || !carPrice || !minivanPrice || !vanPrice) {
                         console.error("One or more price elements are missing from the HTML.");

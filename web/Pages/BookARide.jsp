@@ -135,7 +135,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Bike</h3>
                                     <p class="person">1 Person</p>
-                                    <p id="bike_fare" class="price">Price: $0.00</p>
+                                    <p id="bike_fare" class="price">Price: LKR 0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Tuk')">
@@ -145,7 +145,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Tuk</h3>
                                     <p class="person">3 People</p>
-                                    <p id="tuk_fare" class="price">Price: $0.00</p>
+                                    <p id="tuk_fare" class="price">Price: LKR 0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Car')">
@@ -155,7 +155,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Car</h3>
                                     <p class="person">4 People</p>
-                                    <p id="car_fare" class="price">Price: $0.00</p>
+                                    <p id="car_fare" class="price">Price: LKR 0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Mini Van')">
@@ -165,7 +165,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Mini Van</h3>
                                     <p class="person">6 People</p>
-                                    <p id="minivan_fare" class="price">Price: $0.00</p>
+                                    <p id="minivan_fare" class="price">Price: LKR 0.00</p>
                                 </div>
                             </div>
                             <div class="card" onclick="selectVehicle('Van')">
@@ -175,7 +175,7 @@
                                 <div class="content">
                                     <h3 class="vehicle-type">Van</h3>
                                     <p class="person">10 People</p>
-                                    <p id="van_fare" class="price">Price: $0.00</p>
+                                    <p id="van_fare" class="price">Price: LKR 0.00</p>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
 
                             // Fetch price based on the selected vehicle
                             let priceElementId = vehicle.toLowerCase().replace(" ", "") + "_fare"; // Converts "Mini Van" → "minivan_fare"
-                            let selectedPrice = document.getElementById(priceElementId).innerText.replace("Price: $", ""); // Extract price value
+                            let selectedPrice = document.getElementById(priceElementId).innerText.replace("Price: ", ""); // Extract price value
 
                             document.getElementById('selectedVehiclePrice').value = selectedPrice; // Store in hidden input
                         }
@@ -254,6 +254,10 @@
                     </div>
 
                     <script>
+                        document.getElementById("payment").addEventListener("change", function () {
+                            sessionStorage.setItem("selectedPayment", this.value);
+                        });
+
                         function togglePaymentFields() {
                             let paymentMethod = document.getElementById("payment").value;
                             let cardFields = document.getElementById("cardPaymentFields");
@@ -283,9 +287,17 @@
                                 <p><span class="head-form-label">Pickup Location:</span> <span class="value" id="confirmPickup"></span></p>
                                 <p><span class="head-form-label">Drop-off Location:</span> <span class="value" id="confirmDropoff"></span></p>
                                 <p><span class="head-form-label">Payment Plan:</span> <span class="value" id="confirmPayment"></span></p>
-                                <p><span class="head-form-label">Estimated Fare:</span> <span class="value" id="confirmFare"></span></p>
+                                <p><span class="head-form-label">Estimated Fare: </span> <span class="value" id="confirmFare"></span></p>
+
+                                <input type="hidden" name="pickup" id="hiddenPickup">
+                                <input type="hidden" name="dropoff" id="hiddenDropoff">
+                                <input type="hidden" name="vehicle" id="hiddenVehicle">
+                                <input type="hidden" name="payment" id="hiddenPayment">
+                                <input type="hidden" name="fare" id="hiddenFare">
+
                                 <button type="button" class="btn back-btn" onclick="prevStep()">Back</button>
                                 <button type="submit" id="confirmbutton" class="btn confirm-btn">Confirm Booking</button>
+
                             </div>
                             <div class="col-md-6">
                                 <img src="../Assets/Images/confirm.jpg" alt="login Image" class="mx-auto w-50 h-auto">
@@ -309,6 +321,14 @@
                     window.location.href = "Dashboard.jsp";
                 }
                 // If the user clicks "Cancel", do nothing (stay on the same page)
+            });
+
+            document.getElementById("confirmbutton").addEventListener("click", function () {
+                document.getElementById("hiddenPickup").value = document.getElementById("confirmPickup").textContent;
+                document.getElementById("hiddenDropoff").value = document.getElementById("confirmDropoff").textContent;
+                document.getElementById("hiddenVehicle").value = document.getElementById("confirmVehicle").textContent;
+                document.getElementById("hiddenPayment").value = document.getElementById("confirmPayment").textContent;
+                document.getElementById("hiddenFare").value = document.getElementById("confirmFare").textContent;
             });
         </script>
 
