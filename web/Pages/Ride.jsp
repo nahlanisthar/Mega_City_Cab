@@ -145,7 +145,7 @@
             </header>
             <nav class="bg-800 py-4">
             </nav>
-            <button id="homeButton" class="btn btn-danger exit-btn">Exit</button>
+            <button id="exitButton" class="btn btn-danger exit-btn">Exit</button>
             <div class="container mt-5">
                 <div class="progressbar">
                     <div class="progress" id="progress"></div>
@@ -164,7 +164,7 @@
                     <form id="bookingForm" method="POST" action="BookCabServlet">
 
                         <!-- Step 5: Finding Driver -->
-                        <div class="step active" id="step1">
+                        <div class="step active" id="step1" data-step="1">
                             <div class="row align-items-center">
                                 <!-- Right Column: Welcome Text -->
                                 <div class="col-md-6">
@@ -191,7 +191,7 @@
                         </div>
 
                         <!-- Step 6: Driver Found -->
-                        <div class="step" id="step2">
+                        <div class="step" id="step2" data-step="2">
                             <div class="row align-items-center">
                                 <!-- Right Column: Welcome Text -->
                                 <div class="col-md-6">
@@ -214,17 +214,14 @@
                             </div>
                         </div>
 
-
-
                         <!-- Step 7: Trip Tracker -->
-                        <div class="step" id="step3">
+                        <div class="step" id="step3" data-step="3">
                             <div class="row align-items-center">
                                 <!-- Right Column: Welcome Text -->
                                 <div class="col-md-6">
                                     <h1 class="chooseus">Step 7: Ride in Progress</h1>
                                     <p id="rideText" class="ride-text">🚕 Driver is 5 minutes away...</p>
-                                    <button type="button" class="btn btn-danger cancel" onclick="cancelRequest()">Cancel</button>
-                                    <button type="button" class="btn next-btn" id="end-trip" onclick="nextStep()">Trip Completed!</button>
+                                    <button type="button" class="btn next-btn" id="end" onclick="nextStep()">Trip Completed!</button>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="map-driver-container">
@@ -237,25 +234,42 @@
                         </div>
 
                         <!-- Step 8: Process Payment -->
-                        <div class="step" id="step4">
+                        <div class="step" id="step4" data-step="4">
                             <div class="row align-items-center">
                                 <!-- Right Column: Welcome Text -->
                                 <div class="col-md-6">
                                     <h1 class="chooseus">Step 8: Payment</h1>
-                                    <h4 class="head-form-label-driver mt-3">Your Total Fare: <span class="fare-value" id="selectedPaymentMethod"><%= session.getAttribute("fare")%></span></h4>
+                                    <h4 class="head-form-label-driver mt-3">Total Fare: <span class="fare-value" id="selectedPaymentMethod"><%= session.getAttribute("fare")%></span></h4>
                                     <h4 class="head-form-label-driver mt-3">Selected Payment Method: <span class="payment-value" id="selectedPaymentMethod"><%= session.getAttribute("payment")%></span></h4>
-                                    <button type="button" class="btn btn-danger cancel" onclick="cancelRequest()">Cancel</button>
-                                    <button type="button" class="btn next-btn" id="end-trip" onclick="nextStep()">Finish!</button>
+                                    <label for="coupon" class="book-form-label">Enter Coupon / Discount code if any: </label>
+                                    <input type="hidden" id="fare" name="fare" value="<%= session.getAttribute("fare")%>">
+                                    <input type="hidden" id="userId" name="userId" value="<%= session.getAttribute("user_id")%>">
+                                    <div class="row mb-2">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="coupon" name="coupon">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-warning" onclick="applyCoupon()">Apply</button>
+                                        </div>
+                                    </div>
+                                    <div id="finalfare" class="hidden">
+                                        <label id="FareLabel" class="head-form-label-driver mt-3">Final Fare: <span class="fare-value" id="finalFareLabel">0.00</span></label>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn next-btn" id="end-trip" onclick="nextStep()">Finish!</button>
+                                    </div>
                                 </div>
                                 <!-- Left Column: Image -->
                                 <div class="col-md-6">
                                     <img src="../Assets/Images/payment.jpg" alt="login Image" class="mx-auto w-50 h-auto">
                                 </div>
+
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+
 
             <footer class="bg-800 text-white py-6">
                 <div class="container mx-auto text-center">
@@ -263,15 +277,19 @@
                 </div>
             </footer>
             <script>
+                sessionStorage.removeItem("redirected"); // Ensure redirection happens each time ride.jsp loads
                 document.addEventListener("DOMContentLoaded", function () {
-                    // Check if redirect already happened
-                    if (!sessionStorage.getItem("redirected")) {
-                        sessionStorage.setItem("redirected", "true"); // Mark redirect as done
+                    let lastRedirectTime = localStorage.getItem("lastRedirectTime");
+                    let currentTime = new Date().getTime();
+
+                    // Redirect only if more than 5 seconds have passed since the last redirect
+                    if (!lastRedirectTime || (currentTime - lastRedirectTime > 5000)) {
+                        localStorage.setItem("lastRedirectTime", currentTime);
                         window.location.replace("<%= request.getContextPath()%>/AssignDriverServlet");
                     }
                 });
 
-                document.getElementById("homeButton").addEventListener("click", function (event) {
+                document.getElementById("exitButton").addEventListener("click", function (event) {
                     let confirmExit = confirm("Exiting will cancel your order. Are you sure you want to proceed?");
                     if (confirmExit) {
                         window.location.href = "Dashboard.jsp";
@@ -281,7 +299,6 @@
                 //step 5
                 let messages = [
                     "Finding the best driver for you...",
-                    "Checking nearby drivers...",
                     "Matching you with the closest ride...",
                     "Almost there! Assigning your driver..."
                 ];
@@ -317,6 +334,7 @@
                 //step 6
                 let arrival_messages = [
                     "🚗 Driver is 5 minutes away...",
+                    "🚗 Driver is 5 minutes away...",
                     "🚕 Driver is 3 minutes away...",
                     "📍 Driver is arriving...",
                     "✅ Driver has arrived!"
@@ -343,7 +361,7 @@
                 }
 
                 // Start intervals
-                let statusInterval = setInterval(updateStatus, 4200); // Update text every 3s
+                let statusInterval = setInterval(updateStatus, 5000); // Update text every 3s
                 let animationInterval = setInterval(moveDriver, 1000); // Animate driver every 1s
 
 
@@ -351,16 +369,20 @@
                 //step 7
                 let ride_messages = [
                     "🚗 Driver is on the way to your destination...",
+                    "🚗 Driver is on the way to your destination...",
+                    "🚗 Driver is on the way to your destination...",
+                    "🚗 Driver is on the way to your destination...",
+                    "🚗 Driver is on the way to your destination...",
                     "🚕 Approaching your destination...",
                     "📍 Almost there...",
                     "✅ You have arrived at your destination!"
                 ];
                 let rideIndex = 0;
-                let endTripBtn = document.getElementById("end-trip");
-                // Disable "Start Trip" button initially
+                let endTripBtn = document.getElementById("end");
+                // Disable "End Trip" button initially
                 //endTripBtn.disabled = true;
-                // Function to update status messages every 3 seconds
 
+                // Function to update status messages every 3 seconds
                 function updateRideStatus() {
                     if (rideIndex < ride_messages.length) {
                         document.getElementById('rideText').textContent = ride_messages[rideIndex++];
@@ -378,9 +400,44 @@
                 }
 
                 // Start intervals
-                let statusInterval2 = setInterval(updateRideStatus, 4200); // Update text every 3s
+                let statusInterval2 = setInterval(updateRideStatus, 6000); // Update text every 3s
                 let animationInterval2 = setInterval(moveRideDriver, 1000); // Animate driver every 1s
 
+
+                //step 8
+                function applyCoupon() {
+                    let couponCode = document.getElementById("coupon").value;
+                    let fare = document.getElementById("fare").value;
+                    let userId = document.getElementById("userId").value;
+
+                    if (couponCode.trim() === "") {
+                        alert("No coupon entered. Proceeding with full fare.");
+                        return;
+                    }
+
+                    // Create AJAX request to send coupon details to ApplyCouponServlet
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("GET", "<%= request.getContextPath()%>/ApplyCouponServlet?coupon=" + encodeURIComponent(couponCode) +
+                            "&fare=" + encodeURIComponent(fare) + "&user_id=" + encodeURIComponent(userId), true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // Parse the response (final fare)
+                            let response = JSON.parse(xhr.responseText);
+
+                            // Update the final fare and show it in the UI
+                            if (response.success) {
+                                let finalFare = response.finalFare;
+                                document.getElementById("finalfare").classList.remove("hidden");
+                                document.getElementById("finalFareLabel").innerHTML = "LKR " + finalFare;
+                                // Update session variable (optional)
+                                sessionStorage.setItem("finalFare", finalFare);
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    };
+                    xhr.send();
+                }
 
                 document.addEventListener("DOMContentLoaded", function () {
                     let currentStep = 0;
@@ -395,11 +452,20 @@
                             progress.classList.toggle("progress-step-active", index <= stepIndex);
                         });
                         updateProgressBar(stepIndex);
+
+                        let exitButton = document.getElementById("exitButton");
+                        if (stepIndex === 2 || stepIndex === 3) { // Step 7 (zero-based index)
+                            exitButton.disabled = true;
+                            exitButton.classList.add("disabled"); // Optional: add a CSS class to style the button as disabled
+                        } else {
+                            exitButton.disabled = false;
+                            exitButton.classList.remove("disabled");
+                        }
                         // Auto-move to Step 6 after 5 seconds if Step 5 is displayed
                         if (stepIndex === 0) {
                             setTimeout(() => {
                                 nextStep();
-                            }, 2000);
+                            }, 10000);
                         }
                     }
 
@@ -423,6 +489,26 @@
                     };
                     showStep(currentStep);
                 });
+
+                function confirmLogout() {
+                    let activeStep = document.querySelector(".step.active"); // Find the active step
+
+                    if (activeStep) {
+                        let currentStep = parseInt(activeStep.getAttribute("data-step")); // Convert to number
+
+                        if (currentStep === 3 || currentStep === 4) {
+                            alert("Please complete your ride process before you logout.");
+                            return false; // Prevent logout
+                        }
+                    }
+
+                    let confirmAction = confirm("Are you sure you want to logout?");
+                    if (confirmAction) {
+                        window.location.href = "LogoutServlet"; // Redirect to logout servlet
+                        return true; // Continue execution
+                    }
+                    return false; // Stop execution if canceled
+                }
             </script>
         </body>
     </html>

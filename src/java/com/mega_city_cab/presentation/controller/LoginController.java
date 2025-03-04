@@ -33,11 +33,13 @@ public class LoginController extends HttpServlet {
         if (isValidUser) {
             String customerName = userDAO.getCustomerNameByUsername(username);
             String phone = userDAO.getContactByUsername(username);
+            String user_id = userDAO.getIdByUsername(username);
 
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("name", customerName);
             session.setAttribute("phone", phone);
+            session.setAttribute("user_id", user_id);
             session.setAttribute("loggedIn", true);
             session.setMaxInactiveInterval(60 * 60); // 1 hour session timeout
 
