@@ -254,7 +254,7 @@ footer{
 .motto-2{
     padding-right: 100px;
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     margin-top: 40px;
 }
 
@@ -266,6 +266,7 @@ footer{
 }
 
 .book-form-label{
+    padding-top: 5px;
     font-size: 17px;
     color: black;
     font-weight: 500;
@@ -628,4 +629,23 @@ footer{
     color: black;
     font-weight: 400;
     font-size: 24px;
+}
+
+.pay-img{
+    margin-bottom: 10px;
+}
+
+.space{
+    min-height: 340px;
+}
+
+.payment-message {
+    margin-top: 10px;
+    color: #607240  ;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
 }

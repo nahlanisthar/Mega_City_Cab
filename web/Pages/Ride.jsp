@@ -132,6 +132,15 @@
                         opacity: 1;
                     }
                 }
+
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
             </style>
         </head>
         <body>
@@ -145,7 +154,6 @@
             </header>
             <nav class="bg-800 py-4">
             </nav>
-            <button id="exitButton" class="btn btn-danger exit-btn">Exit</button>
             <div class="container mt-5">
                 <div class="progressbar">
                     <div class="progress" id="progress"></div>
@@ -161,7 +169,7 @@
                     <p class="motto-2">Please follow these steps to seamlessly book your ride with Mega City Cab.</p>
                 </div>
                 <div class="card-body">
-                    <form id="bookingForm" method="POST" action="BookCabServlet">
+                    <form id="bookingForm" method="POST" action="">
 
                         <!-- Step 5: Finding Driver -->
                         <div class="step active" id="step1" data-step="1">
@@ -182,7 +190,7 @@
                                     <button type="button" class="btn btn-danger cancel" onclick="cancelRequest()">Cancel</button>
                                 </div>
                                 <!-- Left Column: Image -->
-                                <div class="col-md-6">
+                                <div class="col-md-6 space">
                                     <div class="map-container">
                                         <img src="../Assets/Images/pin.png" class="map-pin" width="100" alt="Map Pin">
                                     </div>
@@ -223,7 +231,7 @@
                                     <p id="rideText" class="ride-text">🚕 Driver is 5 minutes away...</p>
                                     <button type="button" class="btn next-btn" id="end" onclick="nextStep()">Trip Completed!</button>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 space">
                                     <div class="map-driver-container">
                                         <img src="../Assets/Images/pickup_pin.png" class="user-pin-2" width="30" alt="User Pin">
                                         <img src="../Assets/Images/driver_pin.png" class="driver-icon-2" width="70" alt="Driver Car">
@@ -255,15 +263,22 @@
                                     <div id="finalfare" class="hidden">
                                         <label id="FareLabel" class="head-form-label-driver mt-3">Final Fare: <span class="fare-value" id="finalFareLabel">0.00</span></label>
                                     </div>
+                                    <div id="pay-text" class="pay-text">
+                                        <label class="book-form-label mt-3">Please pay the fare amount to your driver</label>
+                                    </div>
+                                    <div id="paymentButtonContainer" class="hidden mt-3">
+                                        <button type="button" class="btn btn-success" id="processPayment">Process Payment</button>
+                                    </div>
+                                    <div id="loader" class="loader hidden"><span class="dots"><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span></div>
+                                    <div id="paymentMessage" class="payment-message hidden"></div>
                                     <div>
-                                        <button type="button" class="btn next-btn" id="end-trip" onclick="nextStep()">Finish!</button>
+                                        <button type="submit" class="btn next-btn" id="end-trip">Finish!</button>
                                     </div>
                                 </div>
                                 <!-- Left Column: Image -->
-                                <div class="col-md-6">
-                                    <img src="../Assets/Images/payment.jpg" alt="login Image" class="mx-auto w-50 h-auto">
+                                <div class="col-md-6 space">
+                                    <img src="../Assets/Images/payment.jpg" alt="login Image" class="mx-auto w-50 h-auto pay-img">
                                 </div>
-
                             </div>
                         </div>
                     </form>
@@ -289,13 +304,6 @@
                     }
                 });
 
-                document.getElementById("exitButton").addEventListener("click", function (event) {
-                    let confirmExit = confirm("Exiting will cancel your order. Are you sure you want to proceed?");
-                    if (confirmExit) {
-                        window.location.href = "Dashboard.jsp";
-                    }
-                    // If the user clicks "Cancel", do nothing (stay on the same page)
-                });
                 //step 5
                 let messages = [
                     "Finding the best driver for you...",
@@ -440,6 +448,48 @@
                 }
 
                 document.addEventListener("DOMContentLoaded", function () {
+                    // Get the payment method from JSP
+                    let paymentMethod = "<%= session.getAttribute("payment")%>";
+
+                    // Convert to lowercase for case-insensitive comparison
+                    paymentMethod = paymentMethod ? paymentMethod.toLowerCase() : "";
+
+                    // Get the button container
+                    let paymentButtonContainer = document.getElementById("paymentButtonContainer");
+                    let paytextcontainer = document.getElementById("pay-text");
+                    let finishbtn = document.getElementById("end-trip");
+
+                    // Show button if payment is 'card' or 'mobile'
+                    if (paymentMethod === "card" || paymentMethod === "mobile") {
+                        paytextcontainer.classList.add("hidden");
+                        paymentButtonContainer.classList.remove("hidden");
+                        finishbtn.classList.add("disabled");
+                    }
+                });
+                
+                document.getElementById("processPayment").addEventListener("click", processPayment);
+                
+                function processPayment() {
+                    // Show the loader and hide the payment button
+                    document.getElementById("loader").classList.remove("hidden");
+                    document.getElementById("paymentButtonContainer").classList.add("hidden");
+                    document.getElementById("paymentMessage").classList.add("hidden"); // Hide any previous message
+
+                    // Simulate payment processing
+                    setTimeout(() => {
+                        // Hide the loader
+                        document.getElementById("loader").classList.add("hidden");
+
+                        // Display the success message
+                        document.getElementById("paymentMessage").textContent = "Payment Successful!";
+                        document.getElementById("paymentMessage").classList.remove("hidden");
+                        setTimeout(() => {
+                            document.getElementById("end-trip").classList.remove("disabled");
+                        }, 1000);
+                    }, 4000);
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
                     let currentStep = 0;
                     const steps = document.querySelectorAll(".step");
                     const progressSteps = document.querySelectorAll(".progress-step");
@@ -453,14 +503,6 @@
                         });
                         updateProgressBar(stepIndex);
 
-                        let exitButton = document.getElementById("exitButton");
-                        if (stepIndex === 2 || stepIndex === 3) { // Step 7 (zero-based index)
-                            exitButton.disabled = true;
-                            exitButton.classList.add("disabled"); // Optional: add a CSS class to style the button as disabled
-                        } else {
-                            exitButton.disabled = false;
-                            exitButton.classList.remove("disabled");
-                        }
                         // Auto-move to Step 6 after 5 seconds if Step 5 is displayed
                         if (stepIndex === 0) {
                             setTimeout(() => {

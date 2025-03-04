@@ -40,7 +40,8 @@ public class AssignDriverServlet extends HttpServlet {
             String sql = "SELECT v.vehicle_number, v.vehicle_name, v.vehicle_model, d.driver_id, d.driver_name, d.phone "
                     + "FROM vehicles v "
                     + "JOIN drivers d ON v.driver_id = d.driver_id "
-                    + "WHERE v.vehicle_type = ? AND d.status = 'Available' LIMIT 1";
+                    + "WHERE v.vehicle_type = ? AND d.status = 'Available' "
+                    + "ORDER BY RAND() LIMIT 1";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, vehicleType);
@@ -61,12 +62,6 @@ public class AssignDriverServlet extends HttpServlet {
                 session.setAttribute("driverId", driverId);
                 session.setAttribute("driverName", driverName);
                 session.setAttribute("driverPhone", driverPhone);
-
-                // Step 2: Mark driver as Busy
-//                String updateSql = "UPDATE drivers SET status = 'Busy' WHERE driver_id = ?";
-//                PreparedStatement updateStmt = conn.prepareStatement(updateSql);
-//                updateStmt.setInt(1, driverId);
-//                updateStmt.executeUpdate();
 
                 response.sendRedirect(request.getContextPath() + "/Pages/Ride.jsp");
             } else {
