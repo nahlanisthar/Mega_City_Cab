@@ -350,7 +350,7 @@
                 let arrivalIndex = 0;
                 let startTripBtn = document.getElementById("start-trip");
                 // Disable "Start Trip" button initially
-                //startTripBtn.disabled = true;
+                startTripBtn.disabled = true;
                 // Function to update status messages every 3 seconds
                 function updateStatus() {
                     if (arrivalIndex < arrival_messages.length) {
@@ -388,7 +388,7 @@
                 let rideIndex = 0;
                 let endTripBtn = document.getElementById("end");
                 // Disable "End Trip" button initially
-                //endTripBtn.disabled = true;
+                endTripBtn.disabled = true;
 
                 // Function to update status messages every 3 seconds
                 function updateRideStatus() {

@@ -24,14 +24,11 @@ import com.mega_city_cab.business.model.Ride;
  *
  * @author Nahla
  */
-@WebServlet(name = "RideActivity", urlPatterns = {"/RideActivity"})
-public class RideActivityServlet extends HttpServlet {
-
+@WebServlet(name = "AdminViewRides", urlPatterns = {"/AdminViewRides"})
+public class AdminViewRidesServlet extends HttpServlet {
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int userId = Integer.parseInt(request.getParameter("user_id")); // Ensure user_id is stored in session
-
-        System.out.println("✅ Retrieved user_id from session: " + userId);
 
         List<Ride> rideHistory = new ArrayList<>();
 
@@ -39,18 +36,15 @@ public class RideActivityServlet extends HttpServlet {
             Connection conn = DBconnection.getConnection();
 
             // SQL query to fetch ride history for the logged-in user
-            String sql = "SELECT ride_id, name, phone, pickup_location, dropoff_location, vehicle_type, "
-                    + "vehicle_details, driver_id, driver_name, total_fare, discount_coupon, final_fare, "
-                    + "payment_type, ride_timestamp FROM ride_activity WHERE user_id = ? ORDER BY ride_timestamp DESC";
+            String sql = "SELECT * FROM ride_activity ORDER BY ride_timestamp DESC";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Ride ride = new Ride(
                         rs.getInt("ride_id"),
-                        userId,
+                        rs.getInt("user_id"),
                         rs.getString("name"),
                         rs.getString("phone"),
                         rs.getString("pickup_location"),
@@ -70,12 +64,11 @@ public class RideActivityServlet extends HttpServlet {
 
             session.setAttribute("rideHistory", rideHistory);
 
-            System.out.println("✅ Total Rides Retrieved: " + rideHistory.size());
             for (Ride ride : rideHistory) {
                 System.out.println("Ride ID: " + ride.getRideId() + ", Pickup: " + ride.getPickupLocation());
             }
 
-            response.sendRedirect(request.getContextPath() + "/Pages/RideActivity.jsp");
+            response.sendRedirect(request.getContextPath() + "/Pages/AdminDashboard.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,16 +92,17 @@ public class RideActivityServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RideActivity</title>");
+            out.println("<title>Servlet AdminViewRides</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RideActivity at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminViewRides at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
