@@ -10,7 +10,7 @@
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
 if (session == null || session.getAttribute("username") == null) {
-    response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+    response.sendRedirect(request.getContextPath() + "/Pages/Login.html"); // Redirect to login page if session is invalid
 }
 %>
 
@@ -38,7 +38,7 @@ if (session == null || session.getAttribute("username") == null) {
             <div class="container mx-auto flex justify-around text-white">
                 <a href="Dashboard.jsp" class="hover:text-yellow-400 nav-content">Home</a>
                 <a href="BookARide.jsp" class="hover:text-yellow-400 nav-content">Book A Ride</a>
-                <a href="Ride.jsp" class="hover:text-yellow-400 nav-content">Activity</a>
+                <a href="<%= request.getContextPath() %>/RideActivity?user_id=<%= session.getAttribute("user_id") %>" class="hover:text-yellow-400 nav-content">Activity</a>
                 <a href="MyProfile.jsp" class="hover:text-yellow-400 nav-content">My Profile</a>
             </div>
         </nav>

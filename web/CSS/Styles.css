@@ -649,3 +649,8 @@ footer{
 .hidden {
     display: none;
 }
+
+/*my profile*/
+.profile{
+    float: left;
+}
