@@ -50,7 +50,8 @@ public class CompleteRideServlet extends HttpServlet {
 
         String paymentMethod = (String) session.getAttribute("payment");
         String discountCoupon = request.getParameter("coupon");
-        String finalFare = String.valueOf(session.getAttribute("finalFare"));
+        Object finalFareObj = session.getAttribute("finalFare");
+        Double finalFare = (finalFareObj != null) ? Double.valueOf(finalFareObj.toString()) : null;
 
         System.out.println(userId);
         System.out.println(name);
@@ -81,7 +82,11 @@ public class CompleteRideServlet extends HttpServlet {
             stmt.setString(9, driverName);
             stmt.setDouble(10, totalFare);
             stmt.setString(11, discountCoupon);
-            stmt.setString(12, finalFare);
+            if (finalFare != null) {
+                stmt.setDouble(12, finalFare);
+            } else {
+                stmt.setNull(12, java.sql.Types.DOUBLE);
+            }
             stmt.setString(13, paymentMethod);
             stmt.executeUpdate();
 
