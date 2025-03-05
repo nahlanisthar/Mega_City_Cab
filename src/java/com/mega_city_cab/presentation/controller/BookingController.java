@@ -23,16 +23,18 @@ public class BookingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
+        String fullPickup = request.getParameter("pickup");
+        String fullDropoff = request.getParameter("dropoff");
         // Store user inputs in session
-        session.setAttribute("pickup", request.getParameter("pickup"));
-        session.setAttribute("dropoff", request.getParameter("dropoff"));
+        session.setAttribute("pickup", fullPickup);
+        session.setAttribute("dropoff", fullDropoff);
         session.setAttribute("vehicle", request.getParameter("vehicle"));
         session.setAttribute("payment", request.getParameter("payment"));
         session.setAttribute("fare", request.getParameter("fare"));
 
 // Outputting values to system console to verify if they're stored correctly
-        System.out.println("Pickup: " + session.getAttribute("pickup"));
-        System.out.println("Dropoff: " + session.getAttribute("dropoff"));
+        System.out.println("Pickup: " + fullPickup);
+        System.out.println("Dropoff: " + fullDropoff);
         System.out.println("Vehicle: " + session.getAttribute("vehicle"));
         System.out.println("Payment: " + session.getAttribute("payment"));
         System.out.println("Fare: " + session.getAttribute("fare"));

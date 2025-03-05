@@ -66,7 +66,11 @@ public class AssignDriverServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/Pages/Ride.jsp");
             } else {
                 System.out.println("❌ No available drivers found for vehicle type: " + vehicleType);
-                response.getWriter().write("No available drivers for this vehicle type.");
+                PrintWriter out = response.getWriter();
+                out.println("<script>");
+                out.println("alert('No drivers were found for this vehicle type. Please try again.');");
+                out.println("window.location.href='Pages/Login.html';");
+                out.println("</script>");
             }
         } catch (Exception e) {
             e.printStackTrace();

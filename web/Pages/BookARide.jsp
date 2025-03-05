@@ -10,7 +10,7 @@
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
     if (session == null || session.getAttribute("username") == null) {
-        response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+        response.sendRedirect(request.getContextPath() + "/Pages/Login.html"); // Redirect to login page if session is invalid
     }
 %>
 

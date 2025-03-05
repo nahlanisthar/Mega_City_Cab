@@ -10,7 +10,7 @@
     // Retrieve user's name from session
     HttpSession sessionObj = request.getSession(false);
     if (session == null || session.getAttribute("username") == null) {
-        response.sendRedirect("Login.html"); // Redirect to login page if session is invalid
+        response.sendRedirect(request.getContextPath() + "/Pages/Login.html"); // Redirect to login page if session is invalid
     }
 %>
 
@@ -169,7 +169,7 @@
                     <p class="motto-2">Please follow these steps to seamlessly book your ride with Mega City Cab.</p>
                 </div>
                 <div class="card-body">
-                    <form id="bookingForm" method="POST" action="">
+                    <form id="bookingForm" method="POST" action="/Mega_City_Cab/CompleteRideServlet">
 
                         <!-- Step 5: Finding Driver -->
                         <div class="step active" id="step1" data-step="1">
