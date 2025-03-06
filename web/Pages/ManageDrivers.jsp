@@ -3,10 +3,17 @@
     Created on : Mar 6, 2025, 2:38:18 AM
     Author     : Nahla 
 --%>
+<%
+    if (request.getSession().getAttribute("drivers") == null) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewDriversServlet");
+        dispatcher.forward(request, response);
+        return;
+    }
+%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.mega_city_cab.business.model.Ride" %>
+<%@ page import="com.mega_city_cab.business.model.Driver" %>
 
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 
@@ -47,55 +54,39 @@
         </nav>
         <div class="custom-container">
             <div class="ride-container">
-                <h1 class="welcome-text">Welcome, Admin!</h1>
-                <p class="motto-1">Take a look at today's cab bookings!</p>
+                <h1 class="welcome-text">Mega City Cab Users</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Ride ID</th>
-                            <th>User ID</th>
-                            <th>Customer Name</th>
-                            <th>Customer Phone</th>
-                            <th>Pickup Location</th>
-                            <th>Drop-off Location</th>
-                            <th>Vehicle</th>
-                            <th>Driver ID</th>
-                            <th>Driver Name</th>
-                            <th>Total Fare</th>
-                            <th>Discount Coupon</th>
-                            <th>Final Fare</th>
-                            <th>Payment Type</th>
-                            <th>Date and Time</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>NIC</th>
+                            <th>Phone</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            List<Ride> rideHistory = (List<Ride>) session.getAttribute("rideHistory");
-                            if (rideHistory != null && !rideHistory.isEmpty()) {
-                                for (Ride ride : rideHistory) {
+                            List<Driver> drivers = (List<Driver>) request.getSession().getAttribute("drivers");
+                            if (drivers != null && !drivers.isEmpty()) {
+                                for (Driver driver : drivers) {
                         %>
                         <tr>
-                            <td>#<%= String.format("%05d", ride.getRideId())%></td>
-                            <td><%= ride.getUserId()%></td>
-                            <td><%= ride.getName()%></td>
-                            <td><%= ride.getPhone()%></td>
-                            <td><%= ride.getPickupLocation()%></td>
-                            <td><%= ride.getDropoffLocation()%></td>
-                            <td><%= ride.getVehicleType()%> - <%= ride.getVehicleDetails()%></td>
-                            <td><%= ride.getDriverId()%></td>
-                            <td><%= ride.getDriverName()%></td>
-                            <td>LKR <%= ride.getTotalFare()%></td>
-                            <td><%= ride.getDiscountCoupon()%></td>
-                            <td>LKR <%= (ride.getFinalFare() != null && ride.getFinalFare() > 0) ? ride.getFinalFare() : ride.getTotalFare()%></td>
-                            <td><%= ride.getPaymentType()%></td>
-                            <td><%= ride.getRideTimestamp()%></td>
+                            <td><%= driver.getId()%></td>
+                            <td><%= driver.getName()%></td>
+                            <td><%= driver.getEmail()%></td>
+                            <td><%= driver.getNic()%></td>
+                            <td><%= driver.getPhone()%></td>
+                            <td><%= driver.getStatus()%></td>
+                            
                         </tr>
                         <%
                             }
                         } else {
                         %>
                         <tr>
-                            <td colspan="8" class="text-center">No rides found.</td>
+                            <td colspan="8" class="text-center">No drivers found.</td>
                         </tr>
                         <% }%>
                     </tbody>
@@ -109,22 +100,11 @@
         </footer>
 
         <script>
-            sessionStorage.removeItem("redirected"); // Ensure redirection happens each time ride.jsp loads
-            document.addEventListener("DOMContentLoaded", function () {
-                let lastRedirectTime = localStorage.getItem("lastRedirectTime");
-                let currentTime = new Date().getTime();
-
-                // Redirect only if more than 5 seconds have passed since the last redirect
-                if (!lastRedirectTime || (currentTime - lastRedirectTime > 5000)) {
-                    localStorage.setItem("lastRedirectTime", currentTime);
-                    window.location.replace("<%= request.getContextPath()%>/AdminViewRides");
-                }
-            });
 
             function confirmLogout() {
                 let confirmAction = confirm("Are you sure you want to logout?");
                 if (confirmAction) {
-                    window.location.href = "Logout.jsp"; // Redirect to logout servlet
+                    window.location.href = ; // Redirect to logout servlet
                     return true; // Continue execution
                 }
                 return false; // Stop execution if canceled

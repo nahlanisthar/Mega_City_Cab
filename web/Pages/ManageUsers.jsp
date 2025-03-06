@@ -47,8 +47,8 @@
         <nav class="bg-800 py-4">
             <div class="container mx-auto flex justify-around text-white">
                 <a href="AdminDashboard.jsp" class="hover:text-yellow-400 nav-content">Dashboard</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Manage Users</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Manage Drivers</a>
+                <a href="ManageUsers.jsp" class="hover:text-yellow-400 nav-content">Manage Users</a>
+                <a href="ManageDrivers.jsp" class="hover:text-yellow-400 nav-content">Manage Drivers</a>
                 <a href="#" class="hover:text-yellow-400 nav-content">Manage Vehicles</a>
             </div>
         </nav>
@@ -58,6 +58,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>NIC</th>
@@ -71,6 +72,7 @@
                                 for (Customer customer : users) {
                         %>
                         <tr>
+                            <td><%= customer.getId()%></td>
                             <td><%= customer.getName()%></td>
                             <td><%= customer.getEmail()%></td>
                             <td><%= customer.getNic()%></td>
