@@ -16,6 +16,14 @@
     Customer customer = (Customer) sessionObj.getAttribute("customer");
 %>
 
+<%
+    if (request.getSession().getAttribute("customer") == null) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProfileServlet");
+        dispatcher.forward(request, response);
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -92,18 +100,6 @@
         </footer>
 
         <script>
-            window.onload = () => {
-                // Check if we are not on the Profile page and if the redirect flag is not set in sessionStorage
-                if (window.location.pathname !== "/Mega_City_Cab/ProfileServlet" && !sessionStorage.getItem("redirected")) {
-                    fetchProfile();
-                }
-            };
-
-            function fetchProfile() {
-                // Set the flag in sessionStorage to avoid redirect loop
-                sessionStorage.setItem("redirected", "true");
-                window.location.href = "/Mega_City_Cab/ProfileServlet";
-            }
 
             document.getElementById("editBtn").addEventListener("click", function () {
                 document.getElementById("name").disabled = false;

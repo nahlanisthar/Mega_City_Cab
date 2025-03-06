@@ -46,6 +46,7 @@ public class ProfileServlet extends HttpServlet {
 
             if (rs.next()) {
                 Customer customer = new Customer(
+                        rs.getInt("customer_id"),
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("nic"),
@@ -86,7 +87,7 @@ public class ProfileServlet extends HttpServlet {
             int rowsUpdated = stmt.executeUpdate();
 
             if (rowsUpdated > 0) {
-                Customer updatedCustomer = new Customer(name, email, nic, phone);
+                Customer updatedCustomer = new Customer(customerId, name, email, nic, phone);
                 session.setAttribute("customer", updatedCustomer);
             }
         } catch (Exception e) {

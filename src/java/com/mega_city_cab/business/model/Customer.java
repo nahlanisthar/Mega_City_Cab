@@ -11,13 +11,18 @@ package com.mega_city_cab.business.model;
 public class Customer {
 
     private String name, email, nic, phone;
+    private int customer_id;
 
-
-    public Customer(String name, String email, String nic, String phone ) {
+    public Customer(int customer_id, String name, String email, String nic, String phone) {
+        this.customer_id = customer_id;
         this.name = name;
         this.email = email;
         this.nic = nic;
         this.phone = phone;
+    }
+
+    public int getId() {
+        return customer_id;
     }
 
     public String getName() {
@@ -31,9 +36,8 @@ public class Customer {
     public String getNic() {
         return nic;
     }
-    
+
     public String getPhone() {
         return phone;
     }
 }
-

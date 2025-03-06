@@ -40,7 +40,7 @@
         <nav class="bg-800 py-4">
             <div class="container mx-auto flex justify-around text-white">
                 <a href="AdminDashboard.jsp" class="hover:text-yellow-400 nav-content">Dashboard</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Manage Users</a>
+                <a href="ManageUsers.jsp" class="hover:text-yellow-400 nav-content">Manage Users</a>
                 <a href="#" class="hover:text-yellow-400 nav-content">Manage Drivers</a>
                 <a href="#" class="hover:text-yellow-400 nav-content">Manage Vehicles</a>
             </div>
@@ -85,8 +85,8 @@
                             <td><%= ride.getDriverId()%></td>
                             <td><%= ride.getDriverName()%></td>
                             <td>LKR <%= ride.getTotalFare()%></td>
-                            <td><%= ride.getDiscountCoupon() %></td>
-                            <td>LKR <%= (ride.getFinalFare() != null && ride.getFinalFare() > 0) ? ride.getFinalFare() : ride.getTotalFare() %></td>
+                            <td><%= ride.getDiscountCoupon()%></td>
+                            <td>LKR <%= (ride.getFinalFare() != null && ride.getFinalFare() > 0) ? ride.getFinalFare() : ride.getTotalFare()%></td>
                             <td><%= ride.getPaymentType()%></td>
                             <td><%= ride.getRideTimestamp()%></td>
                         </tr>
@@ -109,23 +109,22 @@
         </footer>
 
         <script>
-            window.onload = () => {
-                // Check if we are not on the Profile page and if the redirect flag is not set in sessionStorage
-                if (window.location.pathname !== "/Mega_City_Cab/AdminViewRides" && !sessionStorage.getItem("redirected")) {
-                    fetchRides();
-                }
-            };
+            sessionStorage.removeItem("redirected"); // Ensure redirection happens each time ride.jsp loads
+            document.addEventListener("DOMContentLoaded", function () {
+                let lastRedirectTime = localStorage.getItem("lastRedirectTime");
+                let currentTime = new Date().getTime();
 
-            function fetchRides() {
-                // Set the flag in sessionStorage to avoid redirect loop
-                sessionStorage.setItem("redirected", "true");
-                window.location.href = "/Mega_City_Cab/AdminViewRides";
-            }
+                // Redirect only if more than 5 seconds have passed since the last redirect
+                if (!lastRedirectTime || (currentTime - lastRedirectTime > 5000)) {
+                    localStorage.setItem("lastRedirectTime", currentTime);
+                    window.location.replace("<%= request.getContextPath()%>/AdminViewRides");
+                }
+            });
 
             function confirmLogout() {
                 let confirmAction = confirm("Are you sure you want to logout?");
                 if (confirmAction) {
-                    window.location.href = "AdminLogoutServlet"; // Redirect to logout servlet
+                    window.location.href = "Logout.jsp"; // Redirect to logout servlet
                     return true; // Continue execution
                 }
                 return false; // Stop execution if canceled

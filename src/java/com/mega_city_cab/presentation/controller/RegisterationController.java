@@ -41,13 +41,13 @@ public class RegisterationController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Customer customer = new Customer(name, email, nic, phone);
+        Customer customer = new Customer(0, name, email, nic, phone);
         CustomerDAO customerDAO = new CustomerDAO();
 
         int customerId = customerDAO.addCustomer(customer);
 
         if (customerId > 0) {
-            User user = new User(username, password, customerId);
+            User user = new User(0, username, password, customerId);
             UserDAO userDAO = new UserDAO();
 
             if (userDAO.addUser(user)) {
