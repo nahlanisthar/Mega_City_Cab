@@ -664,3 +664,40 @@ footer{
     margin: 40px;
 
 }
+
+/*manage drivers*/
+.add-btn{
+    float: right;
+    padding: 5px 60px 5px 60px;
+    background-color: #607240;
+    margin-bottom: 18px;
+}
+
+.AddDriverText{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.addtext{
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.addDriver{
+    margin-bottom: 20px;
+}
+
+.add{
+    float: right;
+    margin-top: 10px;
+}
+
+.cancel{
+    margin-top: 10px;
+}
+
+/*edit*/
+.edit-container{
+    margin: 20px 30px 10px 30px;
+}

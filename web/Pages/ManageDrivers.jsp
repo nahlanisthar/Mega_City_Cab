@@ -55,7 +55,52 @@
         <div class="custom-container">
             <div class="ride-container">
                 <h1 class="welcome-text">Mega City Cab Drivers</h1>
-                <table class="table table-striped">
+                <div class="row align-items-center">
+                    <!-- Left Column: Image -->
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by ID, Name or Availability">
+                        </div>
+                    </div>
+                    <!-- Right Column: Welcome Text -->
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <button class="btn btn-primary add-btn" onclick="showAddDriverForm()">Add Driver</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hidden Add Driver Form -->
+                <div id="addDriverForm" style="display:none;" class="p-4 border rounded shadow-lg bg-white addDriver">
+                    <h3 class="AddDriverText">Add New Driver</h3>
+                    <form action="/Mega_City_Cab/AddDriverServlet" method="post">
+                        <div class="mb-2">
+                            <label class="addtext">Name:</label>
+                            <input type="text" name="driverName" required class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label class="addtext">Email:</label>
+                            <input type="email" name="email" required class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label class="addtext">NIC:</label>
+                            <input type="text" name="nic" required class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label class="addtext">Phone:</label>
+                            <input type="text" name="phone" required class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label class="addtext">Status:</label>
+                            <select name="status" required class="form-control">
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary cancel" onclick="hideAddDriverForm()">Cancel</button>
+                        <button type="submit" class="btn btn-success add">Add Driver</button>
+                    </form>
+                </div>
+                <table id="driverTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -64,6 +109,7 @@
                             <th>NIC</th>
                             <th>Phone</th>
                             <th>Status</th>
+                            <th style="width: 15%">Actions</th> <!-- New column for buttons -->
                         </tr>
                     </thead>
                     <tbody>
@@ -79,6 +125,16 @@
                             <td><%= driver.getNic()%></td>
                             <td><%= driver.getPhone()%></td>
                             <td><%= driver.getStatus()%></td>
+                            <td>
+                                <!-- Update Button -->
+                                <a href="EditDriver.jsp?id=<%= driver.getId()%>" class="btn btn-warning">Update</a>
+
+                                <!-- Remove Button -->
+                                <form action="/Mega_City_Cab/RemoveDriverServlet" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove this driver?');">
+                                    <input type="hidden" name="driverId" value="<%= driver.getId()%>">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </td>
 
                         </tr>
                         <%
@@ -100,6 +156,29 @@
         </footer>
 
         <script>
+            function showAddDriverForm() {
+                document.getElementById('addDriverForm').style.display = 'block';
+            }
+            function hideAddDriverForm() {
+                document.getElementById('addDriverForm').style.display = 'none';
+            }
+
+            document.getElementById("searchInput").addEventListener("keyup", function () {
+                let searchQuery = this.value.toLowerCase();
+                let rows = document.querySelectorAll("#driverTable tbody tr");
+
+                rows.forEach(row => {
+                    let id = row.children[0].textContent.toLowerCase();
+                    let name = row.children[1].textContent.toLowerCase();
+                    let status = row.children[5].textContent.toLowerCase();
+
+                    if (id.includes(searchQuery) ||name.includes(searchQuery) || status.includes(searchQuery)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
 
             function confirmLogout() {
                 let confirmAction = confirm("Are you sure you want to logout?");
