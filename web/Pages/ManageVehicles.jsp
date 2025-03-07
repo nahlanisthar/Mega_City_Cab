@@ -4,8 +4,8 @@
     Author     : Nahla 
 --%>
 <%
-    if (request.getSession().getAttribute("drivers") == null) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewDriversServlet");
+    if (request.getSession().getAttribute("vehicles") == null) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewVehiclesServlet");
         dispatcher.forward(request, response);
         return;
     }
@@ -13,7 +13,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.mega_city_cab.business.model.Driver" %>
+<%@ page import="com.mega_city_cab.business.model.Vehicle" %>
 
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 
@@ -54,39 +54,36 @@
         </nav>
         <div class="custom-container">
             <div class="ride-container">
-                <h1 class="welcome-text">Mega City Cab Drivers</h1>
+                <h1 class="welcome-text">Mega City Cab Vehicles</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Number</th>
+                            <th>Type</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>NIC</th>
-                            <th>Phone</th>
-                            <th>Status</th>
+                            <th>Model</th>
+                            <th>Assigned Driver ID</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            List<Driver> drivers = (List<Driver>) request.getSession().getAttribute("drivers");
-                            if (drivers != null && !drivers.isEmpty()) {
-                                for (Driver driver : drivers) {
+                            List<Vehicle> vehicles = (List<Vehicle>) request.getSession().getAttribute("vehicles");
+                            if (vehicles != null && !vehicles.isEmpty()) {
+                                for (Vehicle vehicle : vehicles) {
                         %>
                         <tr>
-                            <td><%= driver.getId()%></td>
-                            <td><%= driver.getName()%></td>
-                            <td><%= driver.getEmail()%></td>
-                            <td><%= driver.getNic()%></td>
-                            <td><%= driver.getPhone()%></td>
-                            <td><%= driver.getStatus()%></td>
-
+                            <td><%= vehicle.getNumber()%></td>
+                            <td><%= vehicle.getType()%></td>
+                            <td><%= vehicle.getName()%></td>
+                            <td><%= vehicle.getModel()%></td>
+                            <td><%= (vehicle.getDriver_Id() == 0) ? "Not Assigned" : vehicle.getDriver_Id()%></td>
                         </tr>
                         <%
                             }
                         } else {
                         %>
                         <tr>
-                            <td colspan="8" class="text-center">No drivers found.</td>
+                            <td colspan="8" class="text-center">No vehicles found.</td>
                         </tr>
                         <% }%>
                     </tbody>

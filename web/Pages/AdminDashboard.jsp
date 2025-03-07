@@ -33,7 +33,7 @@
             <div class="container mx-auto flex justify-between items-center">
                 <h1 class="headtag">Mega City Cab</h1>
                 <div>
-                    <a href="AdminLogoutServlet" class="login" onclick="return confirmLogout()">Log Out</a>
+                    <a href="Logout.jsp" class="login" onclick="return confirmLogout()">Log Out</a>
                 </div>
             </div>
         </header>
@@ -42,7 +42,7 @@
                 <a href="AdminDashboard.jsp" class="hover:text-yellow-400 nav-content">Dashboard</a>
                 <a href="ManageUsers.jsp" class="hover:text-yellow-400 nav-content">Manage Users</a>
                 <a href="ManageDrivers.jsp" class="hover:text-yellow-400 nav-content">Manage Drivers</a>
-                <a href="#" class="hover:text-yellow-400 nav-content">Manage Vehicles</a>
+                <a href="ManageVehicles.jsp" class="hover:text-yellow-400 nav-content">Manage Vehicles</a>
             </div>
         </nav>
         <div class="custom-container">
@@ -124,7 +124,7 @@
             function confirmLogout() {
                 let confirmAction = confirm("Are you sure you want to logout?");
                 if (confirmAction) {
-                    window.location.href = "Logout.jsp"; // Redirect to logout servlet
+                    response.sendRedirect("Logout.jsp"); // Redirect to logout servlet
                     return true; // Continue execution
                 }
                 return false; // Stop execution if canceled
