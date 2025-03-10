@@ -14,10 +14,12 @@ import java.sql.*;
 
 public class CustomerDAO {
 
+    private static final Connection conn = DBconnection.getConnection(); // Singleton Connection instance
+
     public int addCustomer(Customer customer) {
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "INSERT INTO customers (name, email, nic, phone) VALUES (?, ?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        String query = "INSERT INTO customers (name, email, nic, phone) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement pst = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, customer.getName());
             pst.setString(2, customer.getEmail());
             pst.setString(3, customer.getNic());
@@ -33,6 +35,6 @@ public class CustomerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+        return -1; // Return -1 in case of failure
     }
 }

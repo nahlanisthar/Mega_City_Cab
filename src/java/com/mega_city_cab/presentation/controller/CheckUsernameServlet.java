@@ -16,30 +16,57 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 
-
 /**
  *
  * @author Nahla
  */
 @WebServlet("/checkUsername")
 public class CheckUsernameServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        try (Connection conn = DBconnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM users WHERE username = ?")) {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+
+        // Validate input
+        if (username == null || username.trim().isEmpty()) {
+            response.getWriter().write("invalid");
+            return;
+        }
+
+        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             int count = rs.getInt(1);
             response.getWriter().write(count > 0 ? "taken" : "available");
-
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().write("error");
         }
-      
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();  // Close connection when servlet is destroyed
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -77,7 +104,6 @@ public class CheckUsernameServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -103,4 +129,3 @@ public class CheckUsernameServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-    

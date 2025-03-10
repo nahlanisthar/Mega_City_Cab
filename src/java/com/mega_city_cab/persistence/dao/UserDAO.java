@@ -14,13 +14,14 @@ import java.sql.*;
 
 public class UserDAO {
 
+    private static final Connection conn = DBconnection.getConnection(); // Singleton Connection instance
+
     public boolean isUsernameTaken(String username) {
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "SELECT username FROM users WHERE username = ?";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "SELECT username FROM users WHERE username = ?";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
-            return rs.next(); // True if exists
+            return rs.next(); // True if username exists
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -28,9 +29,8 @@ public class UserDAO {
     }
 
     public boolean addUser(User user) {
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "INSERT INTO users (username, password, customer_id) VALUES (?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "INSERT INTO users (username, password, customer_id) VALUES (?, ?, ?)";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getPassword());
             pst.setInt(3, user.getcustomerId());
@@ -42,13 +42,12 @@ public class UserDAO {
     }
 
     public boolean validateUser(String username, String password) {
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            return rs.next(); // Returns true if user exists
+            return rs.next(); // Returns true if valid credentials
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,54 +55,48 @@ public class UserDAO {
     }
 
     public String getCustomerNameByUsername(String username) {
-        String name = null;
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "SELECT c.name FROM customers c "
-                    + "JOIN users u ON c.customer_id = u.customer_id "
-                    + "WHERE u.username = ?";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "SELECT c.name FROM customers c "
+                + "JOIN users u ON c.customer_id = u.customer_id "
+                + "WHERE u.username = ?";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                name = rs.getString("name");
+                return rs.getString("name");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return name;
+        return null;
     }
 
     public String getContactByUsername(String username) {
-        String phone = null;
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "SELECT c.phone FROM customers c "
-                    + "JOIN users u ON c.customer_id = u.customer_id "
-                    + "WHERE u.username = ?";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "SELECT c.phone FROM customers c "
+                + "JOIN users u ON c.customer_id = u.customer_id "
+                + "WHERE u.username = ?";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                phone = rs.getString("phone");
+                return rs.getString("phone");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return phone;
+        return null;
     }
 
     public String getIdByUsername(String username) {
-        String user_id = null;
-        try (Connection con = DBconnection.getConnection()) {
-            String query = "SELECT user_id FROM users WHERE username = ?";
-            PreparedStatement pst = con.prepareStatement(query);
+        String query = "SELECT user_id FROM users WHERE username = ?";
+        try (PreparedStatement pst = conn.prepareStatement(query)) {
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                user_id = rs.getString("user_id");
+                return rs.getString("user_id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user_id;
+        return null;
     }
 }
