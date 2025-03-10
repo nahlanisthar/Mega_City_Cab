@@ -15,35 +15,37 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.mega_city_cab.util.DBconnection;
+import com.mega_city_cab.business.factory.FareServiceFactory;
+import com.mega_city_cab.business.service.FareService;
 
 /**
  *
  * @author Nahla
  */
-
 @WebServlet(name = "FareServlet", urlPatterns = {"/FareServlet"})
 public class FareServlet extends HttpServlet {
 
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String pickup = request.getParameter("pickup");
         String dropoff = request.getParameter("dropoff");
-        
-        System.out.println("Received pickup: " + pickup + ", dropoff: " + dropoff); // Debugging
 
-        Connection conn = DBconnection.getConnection(); // Using Singleton DB Connection
+        Connection conn = DBconnection.getConnection();
 
         try {
-            double bikeFare = getFare(conn, "bike_fare", pickup, dropoff);
-            double tukFare = getFare(conn, "tuk_fare", pickup, dropoff);
-            double carFare = getFare(conn, "car_fare", pickup, dropoff);
-            double miniVanFare = getFare(conn, "minivan_fare", pickup, dropoff);
-            double vanFare = getFare(conn, "van_fare", pickup, dropoff);
+            String[] vehicleTypes = {"bike", "tuk", "car", "minivan", "van"};
+            StringBuilder fareResults = new StringBuilder();
+
+            for (String vehicle : vehicleTypes) {
+                FareService fareService = FareServiceFactory.getFareService(vehicle);
+                double fare = fareService.getFare(conn, pickup, dropoff);
+                fareResults.append(fare).append(",");
+            }
 
             response.setContentType("text/plain");
             PrintWriter out = response.getWriter();
-            out.print(bikeFare + "," + tukFare + "," + carFare + "," + miniVanFare + "," + vanFare);
+            out.print(fareResults.substring(0, fareResults.length() - 1)); // Remove last comma
             out.flush();
 
         } catch (Exception e) {
@@ -51,15 +53,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         }
     }
 
-    private double getFare(Connection conn, String tableName, String pickup, String dropoff) throws Exception {
-        String query = "SELECT fare FROM " + tableName + " WHERE pickup = ? AND dropoff = ?";
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, pickup);
-        stmt.setString(2, dropoff);
-        ResultSet rs = stmt.executeQuery();
-        return rs.next() ? rs.getDouble("fare") : 0.0;
-    }
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -88,7 +81,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-    /**
+     * /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request

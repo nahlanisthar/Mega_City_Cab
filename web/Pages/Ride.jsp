@@ -260,6 +260,7 @@
                                             <button type="button" class="btn btn-warning" onclick="applyCoupon()">Apply</button>
                                         </div>
                                     </div>
+                                    <label for="coupon" class="book-form-label">Use the 'FIRSTRIDE' coupon code if this is your first ride with us! </label>
                                     <div id="finalfare" class="hidden">
                                         <label id="FareLabel" class="head-form-label-driver mt-3">Final Fare: <span class="fare-value" id="finalFareLabel">0.00</span></label>
                                     </div>
