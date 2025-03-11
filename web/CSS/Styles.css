@@ -3,7 +3,701 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : Feb 17, 2025, 6:18:10 PM
+    Created on : Feb 10, 2025, 10:47:36 PM
     Author     : Nahla 
 */
 
+html, body {
+    overflow-x: hidden;
+}
+
+header{
+    background-color: #85a05d;
+    color: white;
+}
+
+.headtag{
+    font-family: fantasy;
+    font-size: 35px;
+}
+
+nav{
+    background-color: #607240;
+}
+
+.nav-content{
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.login{
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
+    padding-left: 50px;
+}
+
+.admin{
+    font-size: 25px;
+    color: white;
+    padding-left: 50px;
+    padding-top: 15px;
+}
+
+.adminloginpic{
+    margin-top: 80px;
+    margin-right: 5px;
+}
+
+
+footer{
+    background-color: #607240;
+}
+
+.welcome-text {
+    font-size: 45px;
+    font-weight: bolder;
+    padding-right: 50px;
+    color: #607240;      /* Example text color */
+    margin-bottom: 20px;
+}
+
+.motto{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.btn{
+    background-color: #85a05d;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+/*about us page*/
+.about{
+    padding-left: 80px;
+}
+
+.services{
+    background-color: #85a05d;
+}
+
+.ourservices{
+    color: white;
+}
+
+.site{
+    font-size: 80px;
+    color: white;
+}
+
+.service-text{
+    font-size: 25px;
+    font-weight: bolder;
+    color: white;
+}
+
+.description{
+    font-size: 18px;
+    color: white;
+}
+
+.about-closing{
+    font-size: 20px;
+    padding: 70px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+
+}
+
+.chooseus{
+    font-size: 35px;
+    font-weight: bolder;
+    color: #607240;
+    margin-bottom: 20px;
+}
+
+
+/*how it works page*/
+.steps{
+    margin-top: 30px;
+}
+
+.steps-left{
+    font-size: 20px;
+    padding-left: 120px;
+}
+
+.steps-right{
+    font-size: 20px;
+    padding-right: 120px;
+}
+
+.how-closing{
+    font-size: 20px;
+    padding: 70px;
+    margin-top: 40px;
+}
+
+
+/*Contact us page*/
+.contact-form{
+    padding-left: 30px;
+}
+
+.friend{
+    padding: 4.5px;
+}
+
+
+/*Login page*/
+.login-container {
+    height: 100vh;
+}
+
+.loginpic{
+    padding-top: 120px;
+}
+
+.login-section{
+    background-color: #85a05d;
+}
+
+.loginfont{
+    font-family: fantasy;
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.login-form-label{
+    padding-left: 85px;
+    color: white;
+    font-weight: bold;
+}
+
+.submitbtn{
+    background-color: #607240;
+    padding: 10px 100px 10px 100px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.error-message{
+    color: red;
+}
+
+
+/*Sign Up page*/
+.signupfont{
+    font-family: fantasy;
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.signup-form-label{
+    padding-left: 85px;
+    color: white;
+    font-weight: bold;
+}
+
+.login-font{
+    font-family: serif;
+    text-align: center;
+    color: white;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
+.text-danger {
+    color: darkred !important;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 85px;
+}
+
+/*Dashboard*/
+.motto-1{
+    padding-right: 100px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+
+/*Book a Ride Page*/
+.set-height{
+    min-height: 380px;
+}
+
+.exit-btn{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 115px;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}
+
+.step-text{
+    font-size: 45px;
+    font-weight: bolder;
+    padding-right: 50px;
+    color: #607240;      /* Example text color */
+    margin-bottom: 20px;
+}
+
+.motto-2{
+    padding-right: 100px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+.head-form-label{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #85a05d;
+}
+
+.book-form-label{
+    padding-top: 5px;
+    font-size: 17px;
+    color: black;
+    font-weight: 500;
+}
+
+
+.next-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}
+
+.back-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 5px 35px 5px 35px;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+/*vehicle type*/
+/*picture boxes*/
+.piccontainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    /*    max-width: 1200px;*/
+}
+.card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+.image-section {
+    text-align: center;
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.content {
+    padding: 15px;
+    text-align: center;
+}
+
+.selection-label{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.van-img{
+    padding-top: 30px;
+    padding-bottom: 25px;
+}
+
+.bike-img{
+    margin-top: 20px;
+}
+
+.vehicle-type{
+    font-size: 18px;
+    font-weight: 500;
+    color: #607240;
+}
+
+.person{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.price{
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.user{
+    font-size: 5px;
+    background-color: red;
+}
+
+/*payment*/
+.pay-form-label{
+    font-size: 20px;
+    font-weight: 500;
+    color: #85a05d;
+}
+
+.paytype-form-label{
+    font-size: 18px;
+    color: black;
+    font-weight: 500;
+    margin: 20px 0px 10px 0px;
+}
+
+/*confirm and submit*/
+.value {
+    color: black;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.confirm-btn{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}
+
+.confirm-btn::hover{
+    background-color: green;
+}
+
+
+/* Progress Bar Styling */
+.progressbar {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    counter-reset: step;
+    width: 100%;
+    margin: auto;
+}
+
+.progressbar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.progress {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background-color: #85a05d;
+    transform: translateY(-50%);
+    transition: width 0.4s ease;
+    z-index: -1;
+}
+
+.progress-step {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.4s ease;
+    position: relative;
+    z-index: 1; /* Ensures circles are above the progress bar */
+}
+
+.progress-step::before {
+    counter-increment: step;
+    color: white;
+}
+
+.progress-step-active {
+    background-color: #85a05d;
+}
+
+
+/*ride page*/
+/*step 5*/
+.head-form-label-driver{
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #85a05d;
+}
+
+.driver-details-label{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.driver-values{
+    margin-bottom: 2px;
+}
+
+.arrival-text{
+    font-size: 22px;
+}
+
+.find-text{
+    font-size: 20px;
+}
+
+.image {
+    position: absolute;
+    animation: drive 4.5s linear infinite;
+}
+
+.image-2 {
+    position: absolute;
+    animation: drive 4s linear infinite;
+}
+
+.image-3 {
+    position: absolute;
+    animation: drive 3.5s linear infinite;
+}
+
+.image-4 {
+    position: absolute;
+    animation: drive 3s linear infinite;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+}
+
+.cancel{
+    padding: 5px 35px 5px 35px;
+    background-color: crimson;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.dots span {
+    display: inline-block;
+    animation: blink 1.5s infinite;
+}
+.dots span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.dots span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.status-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.map-container {
+    width: 550px;
+    height: 300px;
+    background: url('../Assets/Images/map.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    float: right;
+}
+
+.map-pin {
+    position: absolute;
+    left: 50%;
+    bottom: 15%;
+    transform: translateX(-50%);
+    animation: bounce 1s infinite, pulse 1.5s infinite;
+}
+
+/*step 6*/
+.map-driver-container{
+    width: 550px;
+    height: 300px;
+    background: url('../Assets/Images/driver_map.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    float: right;
+}
+/* User Location Pin */
+.user-pin {
+    position: absolute;
+    left: 46%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    animation: bounce 1s infinite, pulse 1.5s infinite;
+}
+/* Driver Car Icon */
+.driver-icon {
+    position: absolute;
+    left: 10%; /* Start far from user */
+    top: 10%;
+    transition: all 8s linear;
+}
+.arrival-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/*step 7*/
+.ride-text{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.driver-icon-2 {
+    position: absolute;
+    left: 10%; /* Start far from user */
+    top: 10%;
+    transition: all 8s linear;
+    z-index: 1;
+}
+
+.user-pin-2 {
+    position: absolute;
+    left: 42%;
+    bottom: 20px;
+    transform: translateX(-50%);
+}
+
+.end-pin{
+    position: absolute;
+    left: 77%;
+    bottom: 200px;
+    transform: translateX(-50%);
+    animation: bounce 1s infinite, pulse 1.5s infinite;
+}
+
+/*step 8*/
+.fare-value{
+    color: black;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.payment-value{
+    color: black;
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.pay-img{
+    margin-bottom: 10px;
+}
+
+.space{
+    min-height: 340px;
+}
+
+.payment-message {
+    margin-top: 10px;
+    color: #607240  ;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
+}
+
+/*my profile*/
+.profile{
+    float: left;
+}
+
+
+
+
+/*ADMIN*/
+/*Dashboard*/
+.ride-container{
+    margin: 40px;
+
+}
+
+/*manage drivers*/
+.add-btn{
+    float: right;
+    padding: 5px 60px 5px 60px;
+    background-color: #607240;
+    margin-bottom: 18px;
+}
+
+.AddDriverText{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.addtext{
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.addDriver{
+    margin-bottom: 20px;
+}
+
+.add{
+    float: right;
+    margin-top: 10px;
+}
+
+.cancel{
+    margin-top: 10px;
+}
+
+/*edit*/
+.edit-container{
+    margin: 20px 30px 10px 30px;
+}
