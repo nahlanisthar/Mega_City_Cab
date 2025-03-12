@@ -41,8 +41,8 @@ public class DriverTest {
         // Given
         int driverId = 101;
         String driverName = "James Smith";
-        String email = "james@example.com";
-        String nic = "987654321V";
+        String email = "james@gmail.com";
+        String nic = "98765432132V";
         String phone = "0771234567";
         String status = "Available";
 

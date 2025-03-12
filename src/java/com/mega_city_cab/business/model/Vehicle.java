@@ -9,10 +9,26 @@ package com.mega_city_cab.business.model;
  * @author Nahla
  */
 public class Vehicle {
+
     private String vehicle_number, vehicle_type, vehicle_name, vehicle_model;
     private int driver_id;
 
-    public Vehicle (String vehicle_number, String vehicle_type, String vehicle_name, String vehicle_model, int driver_id) {
+    public Vehicle(String vehicle_number, String vehicle_type, String vehicle_name, String vehicle_model, int driver_id) {
+
+        // Validate that no string parameters are null
+        if (vehicle_number == null) {
+            throw new IllegalArgumentException("Vehicle number cannot be null");
+        }
+        if (vehicle_type == null) {
+            throw new IllegalArgumentException("Vehicle type cannot be null");
+        }
+        if (vehicle_name == null) {
+            throw new IllegalArgumentException("Vehicle name cannot be null");
+        }
+        if (vehicle_model == null) {
+            throw new IllegalArgumentException("Vehicle model cannot be null");
+        }
+        
         this.vehicle_number = vehicle_number;
         this.vehicle_type = vehicle_type;
         this.vehicle_name = vehicle_name;

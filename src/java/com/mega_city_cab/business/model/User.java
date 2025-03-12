@@ -15,6 +15,17 @@ public class User {
     private int customerId;
 
     public User(int user_id, String username, String password, int customerId) {
+        // Check if username or password is null and throw an exception
+        if (username == null && password == null) {
+            throw new IllegalArgumentException("Username and Password cannot be null");
+        }
+        if (username == null) {
+            throw new IllegalArgumentException("Username cannot be null");
+        }
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+
         this.user_id = user_id;
         this.username = username;
         this.password = password;

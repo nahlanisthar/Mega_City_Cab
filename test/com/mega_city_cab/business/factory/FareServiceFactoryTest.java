@@ -43,7 +43,7 @@ public class FareServiceFactoryTest {
     @Test
     public void givenVehicleType_whenGetFareService_thenCorrectInstanceReturned() {
         // Given
-        String vehicleType = "A vehicle";
+        String vehicleType = "bike";
 
         // When
         FareService service = FareServiceFactory.getFareService(vehicleType);
@@ -55,7 +55,7 @@ public class FareServiceFactoryTest {
     @Test
     public void givenInvalidVehicleType_whenGetFareService_thenThrowException() {
         // Given
-        String vehicleType = "Aeroplane"; // Invalid vehicle type
+        String vehicleType = "bus"; // Invalid vehicle type
 
         // When & Then
         assertThrows(IllegalArgumentException.class, () -> {
