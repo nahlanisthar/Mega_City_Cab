@@ -23,11 +23,11 @@ public class Vehicle {
     public String getNumber() {
         return vehicle_number;
     }
-    
+
     public String getType() {
         return vehicle_type;
     }
-    
+
     public String getName() {
         return vehicle_name;
     }
