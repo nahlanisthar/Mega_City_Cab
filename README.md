@@ -4,12 +4,14 @@ Mega City Cab is an innovative cab service application for Colombo, designed to 
 ![Screenshot](home.png)
 
 ## Table of Contents
-- [Introduction](#introduction)
+- [Overview](#overview)
 - [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+- [Versioning Information](#versioning-information)
+- [Installation Guide](#installation-guide)
+- [Dependencies](#dependencies)
+- [CI/CD Workflow](#cicd-workflow)
+- [Screenshots](#screenshots)
+- [Contribution Guidelines](#contribution-guidelines)
 - [License](#license)
 - [Contact](#contact)
 
