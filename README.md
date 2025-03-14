@@ -5,6 +5,18 @@ Mega City Cab is an innovative cab service application for Colombo, designed to 
 Mega City Cab is a **Java-based web application** designed to streamline the cab booking process. It allows customers to register, book rides, track drivers, make payments, and view ride history. The system also includes an **admin panel** for managing drivers, vehicles, and user activities.
 
 ## Screenshots
+Home Page
+![Screenshot](home.png)
+Registeration
+![Screenshot](register.png)
+User Dashboard
+![Screenshot](user-dashboard.png)
+Ride Booking Wizard
+![Screenshot](ride-booking.png)
+Ride Progressing Wizard
+![Screenshot](ride.png)
+Admin Dashboard
+![Screenshot](admin-dashboard.png)
 
 
 ## Table of Contents
@@ -23,6 +35,7 @@ Mega City Cab is designed to provide a smooth and efficient ride-booking experie
 - **Java 21.0.5**: Backend development.
 - **JDBC & MySQL**: Database connectivity and management.
 - **JSP & Servlets**: Dynamic web page rendering and business logic.
+- **Tomcat Server version 10**: Web application server.
 - **Bootstrap & Tailwind CSS**: Frontend styling and responsiveness.
 - **Git & GitHub**: Version control and collaboration.
 - **phpMyAdmin**: MySQL database management.
@@ -38,7 +51,7 @@ To run this project locally, follow these steps:
 2. Set up the database:
    - Open phpMyAdmin.
    - Create a new database named **mega_city_cab**.
-   - Import the provided SQL file (if available).
+   - Import the provided SQL file (mega_city_cab.sql).
 
 3. Configure database connection:
    - Ensure JDBC URL is set to:
@@ -50,8 +63,8 @@ To run this project locally, follow these steps:
      Class.forName("com.mysql.cj.jdbc.Driver");
      ```
 
-4. Open the project in NetBeans or any Java-supported IDE.
-5. Run the application using the server (Tomcat or GlassFish).
+4. Open the project in NetBeans.
+5. Run the application using the Tomcat server.
 
 ## Usage
 - Users can **register, log in, and book rides**.
