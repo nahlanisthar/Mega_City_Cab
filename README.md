@@ -49,7 +49,7 @@ Ensure you have the following installed:
 - **Git**
 
 ### Technologies Used
-- - **Java 21.0.5**: Backend development.
+- **Java 21.0.5**: Backend development.
 - **JDBC & MySQL**: Database connectivity and management.
 - **JSP & Servlets**: Dynamic web page rendering and business logic.
 - **Tomcat Server version 10**: Web application server.
