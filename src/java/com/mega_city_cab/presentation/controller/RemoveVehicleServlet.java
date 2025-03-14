@@ -21,14 +21,21 @@ import java.sql.PreparedStatement;
  */
 @WebServlet(name = "RemoveVehicleServlet", urlPatterns = {"/RemoveVehicleServlet"})
 public class RemoveVehicleServlet extends HttpServlet {
-    
+
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String vehicle_number = request.getParameter("vehicleNumber");
 
-        try {
-            Connection conn = DBconnection.getConnection();
-            String sql = "DELETE FROM vehicles WHERE vehicle_number=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "DELETE FROM vehicles WHERE vehicle_number=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, vehicle_number);
             stmt.executeUpdate();
 

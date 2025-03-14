@@ -17,9 +17,8 @@
 %>
 
 <%
-    if (request.getSession().getAttribute("customer") == null) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProfileServlet");
-        dispatcher.forward(request, response);
+    if (customer == null) {
+        response.sendRedirect(request.getContextPath() + "/ProfileServlet");
         return;
     }
 %>

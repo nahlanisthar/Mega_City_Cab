@@ -21,8 +21,16 @@ import java.sql.PreparedStatement;
  */
 @WebServlet(name = "UpdateDriverServlet", urlPatterns = {"/UpdateDriverServlet"})
 public class UpdateDriverServlet extends HttpServlet {
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int driverId = Integer.parseInt(request.getParameter("driver_id"));
         String name = request.getParameter("name");
@@ -31,10 +39,9 @@ public class UpdateDriverServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String status = request.getParameter("status");
 
-        try {
-            Connection conn = DBconnection.getConnection();
-            String sql = "UPDATE drivers SET driver_name=?, email=?, nic=?, phone=?, status=? WHERE driver_id=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "UPDATE drivers SET driver_name=?, email=?, nic=?, phone=?, status=? WHERE driver_id=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, email);
             stmt.setString(3, nic);
@@ -48,6 +55,7 @@ public class UpdateDriverServlet extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/ViewDriversServlet");
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

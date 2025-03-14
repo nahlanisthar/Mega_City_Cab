@@ -27,6 +27,14 @@ import com.mega_city_cab.business.model.Ride;
 @WebServlet(name = "RideActivity", urlPatterns = {"/RideActivity"})
 public class RideActivityServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         int userId = Integer.parseInt(request.getParameter("user_id")); // Ensure user_id is stored in session
@@ -35,15 +43,12 @@ public class RideActivityServlet extends HttpServlet {
 
         List<Ride> rideHistory = new ArrayList<>();
 
-        try {
-            Connection conn = DBconnection.getConnection();
+        // SQL query to fetch ride history for the logged-in user
+        String sql = "SELECT ride_id, name, phone, pickup_location, dropoff_location, vehicle_type, "
+                + "vehicle_details, driver_id, driver_name, total_fare, discount_coupon, final_fare, "
+                + "payment_type, ride_timestamp FROM ride_activity WHERE user_id = ? ORDER BY ride_timestamp DESC";
 
-            // SQL query to fetch ride history for the logged-in user
-            String sql = "SELECT ride_id, name, phone, pickup_location, dropoff_location, vehicle_type, "
-                    + "vehicle_details, driver_id, driver_name, total_fare, discount_coupon, final_fare, "
-                    + "payment_type, ride_timestamp FROM ride_activity WHERE user_id = ? ORDER BY ride_timestamp DESC";
-
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
 

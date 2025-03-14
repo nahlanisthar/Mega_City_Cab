@@ -21,17 +21,24 @@ import java.sql.PreparedStatement;
  */
 @WebServlet(name = "AddVehicleServlet", urlPatterns = {"/AddVehicleServlet"})
 public class AddVehicleServlet extends HttpServlet {
-    
+
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String number = request.getParameter("vehicleNumber");
         String type = request.getParameter("type");
         String name = request.getParameter("vehicleName");
         String model = request.getParameter("model");
 
-        try {
-            Connection conn = DBconnection.getConnection();
-            String sql = "INSERT INTO vehicles (vehicle_number, vehicle_type, vehicle_name, vehicle_model) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "INSERT INTO vehicles (vehicle_number, vehicle_type, vehicle_name, vehicle_model) VALUES (?, ?, ?, ?)";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, number);
             stmt.setString(2, type);
             stmt.setString(3, name);

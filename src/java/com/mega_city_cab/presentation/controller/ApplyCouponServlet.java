@@ -24,6 +24,14 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ApplyCouponServlet", urlPatterns = {"/ApplyCouponServlet"})
 public class ApplyCouponServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     private void processCoupon(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/json");
@@ -34,8 +42,6 @@ public class ApplyCouponServlet extends HttpServlet {
             String fareStr = request.getParameter("fare").replace("LKR ", "").trim();
             double fare = Double.parseDouble(fareStr);
             int userId = Integer.parseInt(request.getParameter("user_id"));
-
-            Connection conn = DBconnection.getConnection();
 
             // Check if coupon exists
             String query = "SELECT discount_percentage, validity_condition FROM coupons WHERE code = ?";

@@ -22,6 +22,14 @@ import java.sql.PreparedStatement;
 @WebServlet(name = "UpdateVehicleServlet", urlPatterns = {"/UpdateVehicleServlet"})
 public class UpdateVehicleServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String number = request.getParameter("v_number");
@@ -29,11 +37,10 @@ public class UpdateVehicleServlet extends HttpServlet {
         String name = request.getParameter("v_name");
         String model = request.getParameter("v_model");
         int driverId = Integer.parseInt(request.getParameter("v_driver_id"));
-        
-        try {
-            Connection conn = DBconnection.getConnection();
-            String sql = "UPDATE vehicles SET vehicle_type=?, vehicle_name=?, vehicle_model=?, driver_id=? WHERE vehicle_number=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+
+        String sql = "UPDATE vehicles SET vehicle_type=?, vehicle_name=?, vehicle_model=?, driver_id=? WHERE vehicle_number=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, type);
             stmt.setString(2, name);
             stmt.setString(3, model);

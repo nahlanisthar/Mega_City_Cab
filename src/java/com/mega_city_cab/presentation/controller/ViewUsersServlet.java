@@ -27,18 +27,23 @@ import java.util.List;
 @WebServlet(name = "ViewUsersServlet", urlPatterns = {"/ViewUsersServlet"})
 public class ViewUsersServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
         List<Customer> users = new ArrayList<>();
-
-        try {
-            Connection conn = DBconnection.getConnection();
-
-            // SQL query to fetch ride history for the logged-in user
+        
+                    // SQL query to fetch ride history for the logged-in user
             String sql = "SELECT * FROM customers";
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

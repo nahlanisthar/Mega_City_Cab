@@ -24,6 +24,14 @@ import com.mega_city_cab.util.DBconnection;
 @WebServlet(name = "CompleteRideServlet", urlPatterns = {"/CompleteRideServlet"})
 public class CompleteRideServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
@@ -69,7 +77,7 @@ public class CompleteRideServlet extends HttpServlet {
         System.out.println("End");
 
         // Database connection and insertion
-        try (Connection conn = DBconnection.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO ride_activity (user_id, name, phone, pickup_location, dropoff_location, vehicle_type, vehicle_details, driver_id, driver_name, total_fare, discount_coupon, final_fare, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO ride_activity (user_id, name, phone, pickup_location, dropoff_location, vehicle_type, vehicle_details, driver_id, driver_name, total_fare, discount_coupon, final_fare, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             stmt.setInt(1, userId);
             stmt.setString(2, name);

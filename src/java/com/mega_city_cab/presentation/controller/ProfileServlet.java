@@ -25,6 +25,14 @@ import com.mega_city_cab.business.model.Customer;
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet"})
 public class ProfileServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -34,13 +42,14 @@ public class ProfileServlet extends HttpServlet {
         }
 
         int userId = Integer.parseInt((String) session.getAttribute("user_id"));
-        try (Connection conn = DBconnection.getConnection()) {
-            String getCustomerSQL = "SELECT c.customer_id, c.name, c.email, c.nic, c.phone " +
-                                    "FROM customers c " +
-                                    "INNER JOIN users u ON c.customer_id = u.customer_id " +
-                                    "WHERE u.user_id = ?";
 
-            PreparedStatement stmt = conn.prepareStatement(getCustomerSQL);
+        String getCustomerSQL = "SELECT c.customer_id, c.name, c.email, c.nic, c.phone "
+                + "FROM customers c "
+                + "INNER JOIN users u ON c.customer_id = u.customer_id "
+                + "WHERE u.user_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(getCustomerSQL);) {
+
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
 
@@ -55,11 +64,13 @@ public class ProfileServlet extends HttpServlet {
 
                 session.setAttribute("customer", customer);
                 session.setAttribute("customer_id", rs.getInt("customer_id"));
+                response.sendRedirect(request.getContextPath() + "/Pages/MyProfile.jsp");
+            } else {  
+                response.sendRedirect(request.getContextPath() + "/Pages/Login.html");
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        response.sendRedirect(request.getContextPath() + "/Pages/MyProfile.jsp");
+        } 
     }
 
     @Override
@@ -76,9 +87,10 @@ public class ProfileServlet extends HttpServlet {
         String nic = request.getParameter("nic");
         String phone = request.getParameter("phone");
 
-        try (Connection conn = DBconnection.getConnection()) {
-            String updateSQL = "UPDATE customers SET name = ?, email = ?, nic = ?, phone = ? WHERE customer_id = ?";
-            PreparedStatement stmt = conn.prepareStatement(updateSQL);
+        String updateSQL = "UPDATE customers SET name = ?, email = ?, nic = ?, phone = ? WHERE customer_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(updateSQL);) {
+
             stmt.setString(1, name);
             stmt.setString(2, email);
             stmt.setString(3, nic);
@@ -96,8 +108,6 @@ public class ProfileServlet extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/Pages/MyProfile.jsp");
     }
-
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -126,7 +136,6 @@ public class ProfileServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Returns a short description of the servlet.
      *

@@ -25,7 +25,7 @@ public class Customer {
         }
 
         // Validate phone number (must be exactly 10 digits)
-        if (phone == null || phone.length() != 10 || !phone.matches("[0-9]+")) {
+        if (phone == null || (phone.length() != 9 && phone.length() != 10) || !phone.matches("[0-9]+")) {
             throw new IllegalArgumentException("Phone number must be 10 digits.");
         }
 

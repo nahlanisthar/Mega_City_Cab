@@ -31,7 +31,7 @@ public class Driver {
         }
 
         // Validate phone number 
-        if (phone == null || phone.length() != 10 || !phone.matches("[0-9]+")) {
+        if (phone == null || phone.length() != 10 && phone.length() != 9 || !phone.matches("[0-9]+")) {
             throw new IllegalArgumentException("Phone number must be 10 digits.");
         }
 

@@ -25,13 +25,19 @@ import com.mega_city_cab.business.service.FareService;
 @WebServlet(name = "FareServlet", urlPatterns = {"/FareServlet"})
 public class FareServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String pickup = request.getParameter("pickup");
         String dropoff = request.getParameter("dropoff");
-
-        Connection conn = DBconnection.getConnection();
 
         try {
             String[] vehicleTypes = {"bike", "tuk", "car", "minivan", "van"};

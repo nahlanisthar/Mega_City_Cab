@@ -15,13 +15,20 @@ import com.mega_city_cab.util.DBconnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-
 /**
  *
  * @author Nahla
  */
 @WebServlet(name = "AddDriverServlet", urlPatterns = {"/AddDriverServlet"})
 public class AddDriverServlet extends HttpServlet {
+
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("driverName");
@@ -30,10 +37,9 @@ public class AddDriverServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String status = request.getParameter("status");
 
-        try {
-            Connection conn = DBconnection.getConnection();
-            String sql = "INSERT INTO drivers (driver_name, email, nic, phone, status) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "INSERT INTO drivers (driver_name, email, nic, phone, status) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, email);
             stmt.setString(3, nic);

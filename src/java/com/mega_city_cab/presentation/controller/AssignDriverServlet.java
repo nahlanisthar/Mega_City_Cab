@@ -24,6 +24,14 @@ import java.io.PrintWriter;
 @WebServlet(name = "AssignDriverServlet", urlPatterns = {"/AssignDriverServlet"})
 public class AssignDriverServlet extends HttpServlet {
 
+    private static Connection conn;  // Singleton Connection instance
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        conn = DBconnection.getConnection(); // Initialize the singleton connection
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String vehicleType = (String) session.getAttribute("vehicle");
@@ -34,8 +42,6 @@ public class AssignDriverServlet extends HttpServlet {
         }
 
         try {
-            Connection conn = DBconnection.getConnection();
-
             // Step 1: Retrieve available driver and vehicle
             String sql = "SELECT v.vehicle_number, v.vehicle_name, v.vehicle_model, d.driver_id, d.driver_name, d.phone "
                     + "FROM vehicles v "
